@@ -1,0 +1,3014 @@
+Terminals unused in grammar
+
+   UNARY_OP
+   L_DECR
+   L_INCR
+
+
+State 181 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: Programa $end
+
+    1 $@1: %empty
+
+    2 $@2: %empty
+
+    3 Programa: $@1 Cabecera_programa $@2 Bloque
+
+    4 $@3: %empty
+
+    5 $@4: %empty
+
+    6 Bloque: OPEN_BLOCK $@3 VAR Variables_locales ENDVAR $@4 Declar_de_subprogs Sentencias END_BLOCK
+
+    7 $@5: %empty
+
+    8 Bloque: OPEN_BLOCK $@5 Declar_de_subprogs Sentencias END_BLOCK
+
+    9 Declar_de_subprogs: Declar_subprog Declar_de_subprogs
+   10                   | %empty
+
+   11 $@6: %empty
+
+   12 Declar_subprog: Cabecera_subprog $@6 Bloque
+
+   13 Cabecera_programa: Tipo MAIN LEFT_PAR Lista_parametros RIGHT_PAR
+   14                  | MAIN LEFT_PAR Lista_parametros RIGHT_PAR
+
+   15 Variables_locales: Variables_locales Cuerpo_declar_variables
+   16                  | %empty
+
+   17 Cuerpo_declar_variables: Tipo Lista_identificador SEMICOLON
+   18                        | error
+
+   19 Lista_identificador: Lista_identificador COMMA ID
+   20                    | ID
+
+   21 $@7: %empty
+
+   22 Cabecera_subprog: Tipo ID $@7 LEFT_PAR Lista_parametros RIGHT_PAR
+   23                 | error
+
+   24 Lista_parametros: Lista_parametros COMMA Parametros
+   25                 | Parametros
+   26                 | %empty
+   27                 | error
+
+   28 Parametros: Tipo ID
+
+   29 Sentencias: Sentencias Sentencia
+   30           | %empty
+
+   31 Sentencia: Bloque
+   32          | Sentencia_asignacion
+   33          | Sentencia_entrada
+   34          | Sentencia_salida
+   35          | Sentencia_return
+   36          | Sentencia_switch
+   37          | LIST_HEAD Ident SEMICOLON
+   38          | Ident AHEADBACK SEMICOLON
+   39          | Sentencia_break
+
+   40 $@8: %empty
+
+   41 Sentencia: $@8 Sentencia_if
+
+   42 $@9: %empty
+
+   43 Sentencia: $@9 Sentencia_while
+
+   44 $@10: %empty
+
+   45 Sentencia_asignacion: Ident $@10 ASSIGN Expresion SEMICOLON
+
+   46 $@11: %empty
+
+   47 Sentencia_if: IF LEFT_PAR Expresion $@11 Sentencia_if2
+
+   48 Sentencia_if2: RIGHT_PAR Sentencia
+   49              | RIGHT_PAR Sentencia Sentencia_else
+
+   50 $@12: %empty
+
+   51 Sentencia_else: ELSE $@12 Sentencia
+
+   52 $@13: %empty
+
+   53 Sentencia_while: WHILE LEFT_PAR Expresion $@13 Sentencia_while2
+
+   54 Sentencia_while2: RIGHT_PAR Sentencia
+
+   55 Sentencia_entrada: READ Ident SEMICOLON
+
+   56 Sentencia_salida: WRITE Lista_expresiones_o_cadena SEMICOLON
+
+   57 Sentencia_return: RETURN Expresion SEMICOLON
+
+   58 Sentencia_switch: SWITCH Bloque_switch
+
+   59 Sentencia_break: BREAK SEMICOLON
+
+   60 Bloque_switch: OPEN_BLOCK Sentencias_case END_BLOCK
+
+   61 Sentencias_case: CASE Expresion COLON Bloque Sentencias_case
+   62                | DEFAULT COLON Bloque Sentencias_case
+   63                | %empty
+
+   64 Lista_expresiones_o_cadena: Lista_expresiones_o_cadena COMMA Expresion
+   65                           | Lista_expresiones_o_cadena COMMA STRING
+   66                           | Expresion
+   67                           | STRING
+
+   68 Expresion: LEFT_PAR Expresion RIGHT_PAR
+   69          | NOT Expresion
+   70          | Expresion LOGIC_OR Expresion
+   71          | Expresion LOGIC_AND Expresion
+   72          | Expresion XOR Expresion
+   73          | Expresion BIT_OR Expresion
+   74          | Expresion BIT_AND Expresion
+   75          | ADD_SUB Expresion
+   76          | Expresion ADD_SUB Expresion
+   77          | Expresion MULT Expresion
+   78          | Expresion EQ_NEQ Expresion
+   79          | Expresion VALUE_COMP Expresion
+   80          | Expresion LIST_BIN Expresion
+   81          | LIST_UNARY Expresion
+   82          | Expresion DECR Expresion
+   83          | Expresion INCR Expresion TERNARY Expresion
+   84          | Ident
+   85          | Funcion
+   86          | Constantes
+   87          | error
+
+   88 Constantes: Const_elem
+   89           | Const_lista
+
+   90 Const_elem: INT_VAR
+   91           | BOOL_VAR
+   92           | CHAR_VAR
+   93           | FLOAT_VAR
+
+   94 Const_lista: LEFT_BRACK Lista_expresiones RIGHT_BRACK
+
+   95 Funcion: Cabecera_func Lista_expresiones RIGHT_PAR
+   96        | Cabecera_func RIGHT_PAR
+
+   97 Cabecera_func: IdFun LEFT_PAR
+
+   98 Lista_expresiones: Lista_expresiones COMMA Expresion
+   99                  | Expresion
+
+  100 Tipo: ELEM_TYPE
+  101     | LIST ELEM_TYPE
+
+  102 Ident: ID
+
+  103 IdFun: ID
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256) 18 23 27 87
+MAIN (258) 13 14
+OPEN_BLOCK (259) 6 8 60
+END_BLOCK (260) 6 8 60
+SEMICOLON (261) 17 37 38 45 55 56 57 59
+COMMA (262) 19 24 64 65 98
+LEFT_PAR (263) 13 14 22 47 53 68 97
+RIGHT_PAR (264) 13 14 22 48 49 54 68 95 96
+ASSIGN (265) 45
+IF (266) 47
+ELSE (267) 51
+WHILE (268) 53
+VAR (269) 6
+ENDVAR (270) 6
+SWITCH (271) 58
+CASE (272) 61
+BREAK (273) 59
+RETURN (274) 57
+ELEM_TYPE (275) 100 101
+READ (276) 55
+WRITE (277) 56
+INCR (278) 83
+DECR (279) 82
+AHEADBACK (280) 38
+UNARY_OP (281)
+TERNARY (282) 83
+BOOL_VAR (283) 91
+INT_VAR (284) 90
+FLOAT_VAR (285) 93
+CHAR_VAR (286) 92
+LIST (287) 101
+STRING (288) 65 67
+ID (289) 19 20 22 28 102 103
+LEFT_BRACK (290) 94
+RIGHT_BRACK (291) 94
+COLON (292) 61 62
+DEFAULT (293) 62
+LOGIC_OR (294) 70
+LOGIC_AND (295) 71
+BIT_OR (296) 73
+XOR (297) 72
+BIT_AND (298) 74
+EQ_NEQ (299) 78
+VALUE_COMP (300) 79
+ADD_SUB (301) 75 76
+MULT (302) 77
+LIST_HEAD (303) 37
+LIST_BIN (304) 80
+NOT (305) 69
+LIST_UNARY (306) 81
+L_DECR (307)
+L_INCR (308)
+
+
+Nonterminals, with rules where they appear
+
+$accept (54)
+    on left: 0
+Programa (55)
+    on left: 3, on right: 0
+$@1 (56)
+    on left: 1, on right: 3
+$@2 (57)
+    on left: 2, on right: 3
+Bloque (58)
+    on left: 6 8, on right: 3 12 31 61 62
+$@3 (59)
+    on left: 4, on right: 6
+$@4 (60)
+    on left: 5, on right: 6
+$@5 (61)
+    on left: 7, on right: 8
+Declar_de_subprogs (62)
+    on left: 9 10, on right: 6 8 9
+Declar_subprog (63)
+    on left: 12, on right: 9
+$@6 (64)
+    on left: 11, on right: 12
+Cabecera_programa (65)
+    on left: 13 14, on right: 3
+Variables_locales (66)
+    on left: 15 16, on right: 6 15
+Cuerpo_declar_variables (67)
+    on left: 17 18, on right: 15
+Lista_identificador (68)
+    on left: 19 20, on right: 17 19
+Cabecera_subprog (69)
+    on left: 22 23, on right: 12
+$@7 (70)
+    on left: 21, on right: 22
+Lista_parametros (71)
+    on left: 24 25 26 27, on right: 13 14 22 24
+Parametros (72)
+    on left: 28, on right: 24 25
+Sentencias (73)
+    on left: 29 30, on right: 6 8 29
+Sentencia (74)
+    on left: 31 32 33 34 35 36 37 38 39 41 43, on right: 29 48 49 51
+    54
+$@8 (75)
+    on left: 40, on right: 41
+$@9 (76)
+    on left: 42, on right: 43
+Sentencia_asignacion (77)
+    on left: 45, on right: 32
+$@10 (78)
+    on left: 44, on right: 45
+Sentencia_if (79)
+    on left: 47, on right: 41
+$@11 (80)
+    on left: 46, on right: 47
+Sentencia_if2 (81)
+    on left: 48 49, on right: 47
+Sentencia_else (82)
+    on left: 51, on right: 49
+$@12 (83)
+    on left: 50, on right: 51
+Sentencia_while (84)
+    on left: 53, on right: 43
+$@13 (85)
+    on left: 52, on right: 53
+Sentencia_while2 (86)
+    on left: 54, on right: 53
+Sentencia_entrada (87)
+    on left: 55, on right: 33
+Sentencia_salida (88)
+    on left: 56, on right: 34
+Sentencia_return (89)
+    on left: 57, on right: 35
+Sentencia_switch (90)
+    on left: 58, on right: 36
+Sentencia_break (91)
+    on left: 59, on right: 39
+Bloque_switch (92)
+    on left: 60, on right: 58
+Sentencias_case (93)
+    on left: 61 62 63, on right: 60 61 62
+Lista_expresiones_o_cadena (94)
+    on left: 64 65 66 67, on right: 56 64 65
+Expresion (95)
+    on left: 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85
+    86 87, on right: 45 47 53 57 61 64 66 68 69 70 71 72 73 74 75 76
+    77 78 79 80 81 82 83 98 99
+Constantes (96)
+    on left: 88 89, on right: 86
+Const_elem (97)
+    on left: 90 91 92 93, on right: 88
+Const_lista (98)
+    on left: 94, on right: 89
+Funcion (99)
+    on left: 95 96, on right: 85
+Cabecera_func (100)
+    on left: 97, on right: 95 96
+Lista_expresiones (101)
+    on left: 98 99, on right: 94 95 98
+Tipo (102)
+    on left: 100 101, on right: 13 17 22 28
+Ident (103)
+    on left: 102, on right: 37 38 45 55 84
+IdFun (104)
+    on left: 103, on right: 97
+
+
+State 0
+
+    0 $accept: . Programa $end
+
+    $default  reduce using rule 1 ($@1)
+
+    Programa  go to state 1
+    $@1       go to state 2
+
+
+State 1
+
+    0 $accept: Programa . $end
+
+    $end  shift, and go to state 3
+
+
+State 2
+
+    3 Programa: $@1 . Cabecera_programa $@2 Bloque
+
+    MAIN       shift, and go to state 4
+    ELEM_TYPE  shift, and go to state 5
+    LIST       shift, and go to state 6
+
+    Cabecera_programa  go to state 7
+    Tipo               go to state 8
+
+
+State 3
+
+    0 $accept: Programa $end .
+
+    $default  accept
+
+
+State 4
+
+   14 Cabecera_programa: MAIN . LEFT_PAR Lista_parametros RIGHT_PAR
+
+    LEFT_PAR  shift, and go to state 9
+
+
+State 5
+
+  100 Tipo: ELEM_TYPE .
+
+    $default  reduce using rule 100 (Tipo)
+
+
+State 6
+
+  101 Tipo: LIST . ELEM_TYPE
+
+    ELEM_TYPE  shift, and go to state 10
+
+
+State 7
+
+    3 Programa: $@1 Cabecera_programa . $@2 Bloque
+
+    $default  reduce using rule 2 ($@2)
+
+    $@2  go to state 11
+
+
+State 8
+
+   13 Cabecera_programa: Tipo . MAIN LEFT_PAR Lista_parametros RIGHT_PAR
+
+    MAIN  shift, and go to state 12
+
+
+State 9
+
+   14 Cabecera_programa: MAIN LEFT_PAR . Lista_parametros RIGHT_PAR
+
+    error      shift, and go to state 13
+    ELEM_TYPE  shift, and go to state 5
+    LIST       shift, and go to state 6
+
+    COMMA      reduce using rule 26 (Lista_parametros)
+    RIGHT_PAR  reduce using rule 26 (Lista_parametros)
+
+    Lista_parametros  go to state 14
+    Parametros        go to state 15
+    Tipo              go to state 16
+
+
+State 10
+
+  101 Tipo: LIST ELEM_TYPE .
+
+    $default  reduce using rule 101 (Tipo)
+
+
+State 11
+
+    3 Programa: $@1 Cabecera_programa $@2 . Bloque
+
+    OPEN_BLOCK  shift, and go to state 17
+
+    Bloque  go to state 18
+
+
+State 12
+
+   13 Cabecera_programa: Tipo MAIN . LEFT_PAR Lista_parametros RIGHT_PAR
+
+    LEFT_PAR  shift, and go to state 19
+
+
+State 13
+
+   27 Lista_parametros: error .
+
+    $default  reduce using rule 27 (Lista_parametros)
+
+
+State 14
+
+   14 Cabecera_programa: MAIN LEFT_PAR Lista_parametros . RIGHT_PAR
+   24 Lista_parametros: Lista_parametros . COMMA Parametros
+
+    COMMA      shift, and go to state 20
+    RIGHT_PAR  shift, and go to state 21
+
+
+State 15
+
+   25 Lista_parametros: Parametros .
+
+    $default  reduce using rule 25 (Lista_parametros)
+
+
+State 16
+
+   28 Parametros: Tipo . ID
+
+    ID  shift, and go to state 22
+
+
+State 17
+
+    6 Bloque: OPEN_BLOCK . $@3 VAR Variables_locales ENDVAR $@4 Declar_de_subprogs Sentencias END_BLOCK
+    8       | OPEN_BLOCK . $@5 Declar_de_subprogs Sentencias END_BLOCK
+
+    VAR       reduce using rule 4 ($@3)
+    $default  reduce using rule 7 ($@5)
+
+    $@3  go to state 23
+    $@5  go to state 24
+
+
+State 18
+
+    3 Programa: $@1 Cabecera_programa $@2 Bloque .
+
+    $default  reduce using rule 3 (Programa)
+
+
+State 19
+
+   13 Cabecera_programa: Tipo MAIN LEFT_PAR . Lista_parametros RIGHT_PAR
+
+    error      shift, and go to state 13
+    ELEM_TYPE  shift, and go to state 5
+    LIST       shift, and go to state 6
+
+    COMMA      reduce using rule 26 (Lista_parametros)
+    RIGHT_PAR  reduce using rule 26 (Lista_parametros)
+
+    Lista_parametros  go to state 25
+    Parametros        go to state 15
+    Tipo              go to state 16
+
+
+State 20
+
+   24 Lista_parametros: Lista_parametros COMMA . Parametros
+
+    ELEM_TYPE  shift, and go to state 5
+    LIST       shift, and go to state 6
+
+    Parametros  go to state 26
+    Tipo        go to state 16
+
+
+State 21
+
+   14 Cabecera_programa: MAIN LEFT_PAR Lista_parametros RIGHT_PAR .
+
+    $default  reduce using rule 14 (Cabecera_programa)
+
+
+State 22
+
+   28 Parametros: Tipo ID .
+
+    $default  reduce using rule 28 (Parametros)
+
+
+State 23
+
+    6 Bloque: OPEN_BLOCK $@3 . VAR Variables_locales ENDVAR $@4 Declar_de_subprogs Sentencias END_BLOCK
+
+    VAR  shift, and go to state 27
+
+
+State 24
+
+    8 Bloque: OPEN_BLOCK $@5 . Declar_de_subprogs Sentencias END_BLOCK
+
+    error      shift, and go to state 28
+    ELEM_TYPE  shift, and go to state 5
+    LIST       shift, and go to state 6
+
+    OPEN_BLOCK  reduce using rule 10 (Declar_de_subprogs)
+    END_BLOCK   reduce using rule 10 (Declar_de_subprogs)
+    IF          reduce using rule 10 (Declar_de_subprogs)
+    WHILE       reduce using rule 10 (Declar_de_subprogs)
+    SWITCH      reduce using rule 10 (Declar_de_subprogs)
+    BREAK       reduce using rule 10 (Declar_de_subprogs)
+    RETURN      reduce using rule 10 (Declar_de_subprogs)
+    READ        reduce using rule 10 (Declar_de_subprogs)
+    WRITE       reduce using rule 10 (Declar_de_subprogs)
+    ID          reduce using rule 10 (Declar_de_subprogs)
+    LIST_HEAD   reduce using rule 10 (Declar_de_subprogs)
+
+    Declar_de_subprogs  go to state 29
+    Declar_subprog      go to state 30
+    Cabecera_subprog    go to state 31
+    Tipo                go to state 32
+
+
+State 25
+
+   13 Cabecera_programa: Tipo MAIN LEFT_PAR Lista_parametros . RIGHT_PAR
+   24 Lista_parametros: Lista_parametros . COMMA Parametros
+
+    COMMA      shift, and go to state 20
+    RIGHT_PAR  shift, and go to state 33
+
+
+State 26
+
+   24 Lista_parametros: Lista_parametros COMMA Parametros .
+
+    $default  reduce using rule 24 (Lista_parametros)
+
+
+State 27
+
+    6 Bloque: OPEN_BLOCK $@3 VAR . Variables_locales ENDVAR $@4 Declar_de_subprogs Sentencias END_BLOCK
+
+    $default  reduce using rule 16 (Variables_locales)
+
+    Variables_locales  go to state 34
+
+
+State 28
+
+   23 Cabecera_subprog: error .
+
+    $default  reduce using rule 23 (Cabecera_subprog)
+
+
+State 29
+
+    8 Bloque: OPEN_BLOCK $@5 Declar_de_subprogs . Sentencias END_BLOCK
+
+    $default  reduce using rule 30 (Sentencias)
+
+    Sentencias  go to state 35
+
+
+State 30
+
+    9 Declar_de_subprogs: Declar_subprog . Declar_de_subprogs
+
+    error      shift, and go to state 28
+    ELEM_TYPE  shift, and go to state 5
+    LIST       shift, and go to state 6
+
+    OPEN_BLOCK  reduce using rule 10 (Declar_de_subprogs)
+    END_BLOCK   reduce using rule 10 (Declar_de_subprogs)
+    IF          reduce using rule 10 (Declar_de_subprogs)
+    WHILE       reduce using rule 10 (Declar_de_subprogs)
+    SWITCH      reduce using rule 10 (Declar_de_subprogs)
+    BREAK       reduce using rule 10 (Declar_de_subprogs)
+    RETURN      reduce using rule 10 (Declar_de_subprogs)
+    READ        reduce using rule 10 (Declar_de_subprogs)
+    WRITE       reduce using rule 10 (Declar_de_subprogs)
+    ID          reduce using rule 10 (Declar_de_subprogs)
+    LIST_HEAD   reduce using rule 10 (Declar_de_subprogs)
+
+    Declar_de_subprogs  go to state 36
+    Declar_subprog      go to state 30
+    Cabecera_subprog    go to state 31
+    Tipo                go to state 32
+
+
+State 31
+
+   12 Declar_subprog: Cabecera_subprog . $@6 Bloque
+
+    $default  reduce using rule 11 ($@6)
+
+    $@6  go to state 37
+
+
+State 32
+
+   22 Cabecera_subprog: Tipo . ID $@7 LEFT_PAR Lista_parametros RIGHT_PAR
+
+    ID  shift, and go to state 38
+
+
+State 33
+
+   13 Cabecera_programa: Tipo MAIN LEFT_PAR Lista_parametros RIGHT_PAR .
+
+    $default  reduce using rule 13 (Cabecera_programa)
+
+
+State 34
+
+    6 Bloque: OPEN_BLOCK $@3 VAR Variables_locales . ENDVAR $@4 Declar_de_subprogs Sentencias END_BLOCK
+   15 Variables_locales: Variables_locales . Cuerpo_declar_variables
+
+    error      shift, and go to state 39
+    ENDVAR     shift, and go to state 40
+    ELEM_TYPE  shift, and go to state 5
+    LIST       shift, and go to state 6
+
+    Cuerpo_declar_variables  go to state 41
+    Tipo                     go to state 42
+
+
+State 35
+
+    8 Bloque: OPEN_BLOCK $@5 Declar_de_subprogs Sentencias . END_BLOCK
+   29 Sentencias: Sentencias . Sentencia
+
+    OPEN_BLOCK  shift, and go to state 17
+    END_BLOCK   shift, and go to state 43
+    SWITCH      shift, and go to state 44
+    BREAK       shift, and go to state 45
+    RETURN      shift, and go to state 46
+    READ        shift, and go to state 47
+    WRITE       shift, and go to state 48
+    ID          shift, and go to state 49
+    LIST_HEAD   shift, and go to state 50
+
+    WHILE     reduce using rule 42 ($@9)
+    $default  reduce using rule 40 ($@8)
+
+    Bloque                go to state 51
+    Sentencia             go to state 52
+    $@8                   go to state 53
+    $@9                   go to state 54
+    Sentencia_asignacion  go to state 55
+    Sentencia_entrada     go to state 56
+    Sentencia_salida      go to state 57
+    Sentencia_return      go to state 58
+    Sentencia_switch      go to state 59
+    Sentencia_break       go to state 60
+    Ident                 go to state 61
+
+
+State 36
+
+    9 Declar_de_subprogs: Declar_subprog Declar_de_subprogs .
+
+    $default  reduce using rule 9 (Declar_de_subprogs)
+
+
+State 37
+
+   12 Declar_subprog: Cabecera_subprog $@6 . Bloque
+
+    OPEN_BLOCK  shift, and go to state 17
+
+    Bloque  go to state 62
+
+
+State 38
+
+   22 Cabecera_subprog: Tipo ID . $@7 LEFT_PAR Lista_parametros RIGHT_PAR
+
+    $default  reduce using rule 21 ($@7)
+
+    $@7  go to state 63
+
+
+State 39
+
+   18 Cuerpo_declar_variables: error .
+
+    $default  reduce using rule 18 (Cuerpo_declar_variables)
+
+
+State 40
+
+    6 Bloque: OPEN_BLOCK $@3 VAR Variables_locales ENDVAR . $@4 Declar_de_subprogs Sentencias END_BLOCK
+
+    $default  reduce using rule 5 ($@4)
+
+    $@4  go to state 64
+
+
+State 41
+
+   15 Variables_locales: Variables_locales Cuerpo_declar_variables .
+
+    $default  reduce using rule 15 (Variables_locales)
+
+
+State 42
+
+   17 Cuerpo_declar_variables: Tipo . Lista_identificador SEMICOLON
+
+    ID  shift, and go to state 65
+
+    Lista_identificador  go to state 66
+
+
+State 43
+
+    8 Bloque: OPEN_BLOCK $@5 Declar_de_subprogs Sentencias END_BLOCK .
+
+    $default  reduce using rule 8 (Bloque)
+
+
+State 44
+
+   58 Sentencia_switch: SWITCH . Bloque_switch
+
+    OPEN_BLOCK  shift, and go to state 67
+
+    Bloque_switch  go to state 68
+
+
+State 45
+
+   59 Sentencia_break: BREAK . SEMICOLON
+
+    SEMICOLON  shift, and go to state 69
+
+
+State 46
+
+   57 Sentencia_return: RETURN . Expresion SEMICOLON
+
+    error       shift, and go to state 70
+    LEFT_PAR    shift, and go to state 71
+    BOOL_VAR    shift, and go to state 72
+    INT_VAR     shift, and go to state 73
+    FLOAT_VAR   shift, and go to state 74
+    CHAR_VAR    shift, and go to state 75
+    ID          shift, and go to state 76
+    LEFT_BRACK  shift, and go to state 77
+    ADD_SUB     shift, and go to state 78
+    NOT         shift, and go to state 79
+    LIST_UNARY  shift, and go to state 80
+
+    Expresion      go to state 81
+    Constantes     go to state 82
+    Const_elem     go to state 83
+    Const_lista    go to state 84
+    Funcion        go to state 85
+    Cabecera_func  go to state 86
+    Ident          go to state 87
+    IdFun          go to state 88
+
+
+State 47
+
+   55 Sentencia_entrada: READ . Ident SEMICOLON
+
+    ID  shift, and go to state 49
+
+    Ident  go to state 89
+
+
+State 48
+
+   56 Sentencia_salida: WRITE . Lista_expresiones_o_cadena SEMICOLON
+
+    error       shift, and go to state 70
+    LEFT_PAR    shift, and go to state 71
+    BOOL_VAR    shift, and go to state 72
+    INT_VAR     shift, and go to state 73
+    FLOAT_VAR   shift, and go to state 74
+    CHAR_VAR    shift, and go to state 75
+    STRING      shift, and go to state 90
+    ID          shift, and go to state 76
+    LEFT_BRACK  shift, and go to state 77
+    ADD_SUB     shift, and go to state 78
+    NOT         shift, and go to state 79
+    LIST_UNARY  shift, and go to state 80
+
+    Lista_expresiones_o_cadena  go to state 91
+    Expresion                   go to state 92
+    Constantes                  go to state 82
+    Const_elem                  go to state 83
+    Const_lista                 go to state 84
+    Funcion                     go to state 85
+    Cabecera_func               go to state 86
+    Ident                       go to state 87
+    IdFun                       go to state 88
+
+
+State 49
+
+  102 Ident: ID .
+
+    $default  reduce using rule 102 (Ident)
+
+
+State 50
+
+   37 Sentencia: LIST_HEAD . Ident SEMICOLON
+
+    ID  shift, and go to state 49
+
+    Ident  go to state 93
+
+
+State 51
+
+   31 Sentencia: Bloque .
+
+    $default  reduce using rule 31 (Sentencia)
+
+
+State 52
+
+   29 Sentencias: Sentencias Sentencia .
+
+    $default  reduce using rule 29 (Sentencias)
+
+
+State 53
+
+   41 Sentencia: $@8 . Sentencia_if
+
+    IF  shift, and go to state 94
+
+    Sentencia_if  go to state 95
+
+
+State 54
+
+   43 Sentencia: $@9 . Sentencia_while
+
+    WHILE  shift, and go to state 96
+
+    Sentencia_while  go to state 97
+
+
+State 55
+
+   32 Sentencia: Sentencia_asignacion .
+
+    $default  reduce using rule 32 (Sentencia)
+
+
+State 56
+
+   33 Sentencia: Sentencia_entrada .
+
+    $default  reduce using rule 33 (Sentencia)
+
+
+State 57
+
+   34 Sentencia: Sentencia_salida .
+
+    $default  reduce using rule 34 (Sentencia)
+
+
+State 58
+
+   35 Sentencia: Sentencia_return .
+
+    $default  reduce using rule 35 (Sentencia)
+
+
+State 59
+
+   36 Sentencia: Sentencia_switch .
+
+    $default  reduce using rule 36 (Sentencia)
+
+
+State 60
+
+   39 Sentencia: Sentencia_break .
+
+    $default  reduce using rule 39 (Sentencia)
+
+
+State 61
+
+   38 Sentencia: Ident . AHEADBACK SEMICOLON
+   45 Sentencia_asignacion: Ident . $@10 ASSIGN Expresion SEMICOLON
+
+    AHEADBACK  shift, and go to state 98
+
+    $default  reduce using rule 44 ($@10)
+
+    $@10  go to state 99
+
+
+State 62
+
+   12 Declar_subprog: Cabecera_subprog $@6 Bloque .
+
+    $default  reduce using rule 12 (Declar_subprog)
+
+
+State 63
+
+   22 Cabecera_subprog: Tipo ID $@7 . LEFT_PAR Lista_parametros RIGHT_PAR
+
+    LEFT_PAR  shift, and go to state 100
+
+
+State 64
+
+    6 Bloque: OPEN_BLOCK $@3 VAR Variables_locales ENDVAR $@4 . Declar_de_subprogs Sentencias END_BLOCK
+
+    error      shift, and go to state 28
+    ELEM_TYPE  shift, and go to state 5
+    LIST       shift, and go to state 6
+
+    OPEN_BLOCK  reduce using rule 10 (Declar_de_subprogs)
+    END_BLOCK   reduce using rule 10 (Declar_de_subprogs)
+    IF          reduce using rule 10 (Declar_de_subprogs)
+    WHILE       reduce using rule 10 (Declar_de_subprogs)
+    SWITCH      reduce using rule 10 (Declar_de_subprogs)
+    BREAK       reduce using rule 10 (Declar_de_subprogs)
+    RETURN      reduce using rule 10 (Declar_de_subprogs)
+    READ        reduce using rule 10 (Declar_de_subprogs)
+    WRITE       reduce using rule 10 (Declar_de_subprogs)
+    ID          reduce using rule 10 (Declar_de_subprogs)
+    LIST_HEAD   reduce using rule 10 (Declar_de_subprogs)
+
+    Declar_de_subprogs  go to state 101
+    Declar_subprog      go to state 30
+    Cabecera_subprog    go to state 31
+    Tipo                go to state 32
+
+
+State 65
+
+   20 Lista_identificador: ID .
+
+    $default  reduce using rule 20 (Lista_identificador)
+
+
+State 66
+
+   17 Cuerpo_declar_variables: Tipo Lista_identificador . SEMICOLON
+   19 Lista_identificador: Lista_identificador . COMMA ID
+
+    SEMICOLON  shift, and go to state 102
+    COMMA      shift, and go to state 103
+
+
+State 67
+
+   60 Bloque_switch: OPEN_BLOCK . Sentencias_case END_BLOCK
+
+    CASE     shift, and go to state 104
+    DEFAULT  shift, and go to state 105
+
+    $default  reduce using rule 63 (Sentencias_case)
+
+    Sentencias_case  go to state 106
+
+
+State 68
+
+   58 Sentencia_switch: SWITCH Bloque_switch .
+
+    $default  reduce using rule 58 (Sentencia_switch)
+
+
+State 69
+
+   59 Sentencia_break: BREAK SEMICOLON .
+
+    $default  reduce using rule 59 (Sentencia_break)
+
+
+State 70
+
+   87 Expresion: error .
+
+    $default  reduce using rule 87 (Expresion)
+
+
+State 71
+
+   68 Expresion: LEFT_PAR . Expresion RIGHT_PAR
+
+    error       shift, and go to state 70
+    LEFT_PAR    shift, and go to state 71
+    BOOL_VAR    shift, and go to state 72
+    INT_VAR     shift, and go to state 73
+    FLOAT_VAR   shift, and go to state 74
+    CHAR_VAR    shift, and go to state 75
+    ID          shift, and go to state 76
+    LEFT_BRACK  shift, and go to state 77
+    ADD_SUB     shift, and go to state 78
+    NOT         shift, and go to state 79
+    LIST_UNARY  shift, and go to state 80
+
+    Expresion      go to state 107
+    Constantes     go to state 82
+    Const_elem     go to state 83
+    Const_lista    go to state 84
+    Funcion        go to state 85
+    Cabecera_func  go to state 86
+    Ident          go to state 87
+    IdFun          go to state 88
+
+
+State 72
+
+   91 Const_elem: BOOL_VAR .
+
+    $default  reduce using rule 91 (Const_elem)
+
+
+State 73
+
+   90 Const_elem: INT_VAR .
+
+    $default  reduce using rule 90 (Const_elem)
+
+
+State 74
+
+   93 Const_elem: FLOAT_VAR .
+
+    $default  reduce using rule 93 (Const_elem)
+
+
+State 75
+
+   92 Const_elem: CHAR_VAR .
+
+    $default  reduce using rule 92 (Const_elem)
+
+
+State 76
+
+  102 Ident: ID .
+  103 IdFun: ID .
+
+    LEFT_PAR  reduce using rule 103 (IdFun)
+    $default  reduce using rule 102 (Ident)
+
+
+State 77
+
+   94 Const_lista: LEFT_BRACK . Lista_expresiones RIGHT_BRACK
+
+    error       shift, and go to state 70
+    LEFT_PAR    shift, and go to state 71
+    BOOL_VAR    shift, and go to state 72
+    INT_VAR     shift, and go to state 73
+    FLOAT_VAR   shift, and go to state 74
+    CHAR_VAR    shift, and go to state 75
+    ID          shift, and go to state 76
+    LEFT_BRACK  shift, and go to state 77
+    ADD_SUB     shift, and go to state 78
+    NOT         shift, and go to state 79
+    LIST_UNARY  shift, and go to state 80
+
+    Expresion          go to state 108
+    Constantes         go to state 82
+    Const_elem         go to state 83
+    Const_lista        go to state 84
+    Funcion            go to state 85
+    Cabecera_func      go to state 86
+    Lista_expresiones  go to state 109
+    Ident              go to state 87
+    IdFun              go to state 88
+
+
+State 78
+
+   75 Expresion: ADD_SUB . Expresion
+
+    error       shift, and go to state 70
+    LEFT_PAR    shift, and go to state 71
+    BOOL_VAR    shift, and go to state 72
+    INT_VAR     shift, and go to state 73
+    FLOAT_VAR   shift, and go to state 74
+    CHAR_VAR    shift, and go to state 75
+    ID          shift, and go to state 76
+    LEFT_BRACK  shift, and go to state 77
+    ADD_SUB     shift, and go to state 78
+    NOT         shift, and go to state 79
+    LIST_UNARY  shift, and go to state 80
+
+    Expresion      go to state 110
+    Constantes     go to state 82
+    Const_elem     go to state 83
+    Const_lista    go to state 84
+    Funcion        go to state 85
+    Cabecera_func  go to state 86
+    Ident          go to state 87
+    IdFun          go to state 88
+
+
+State 79
+
+   69 Expresion: NOT . Expresion
+
+    error       shift, and go to state 70
+    LEFT_PAR    shift, and go to state 71
+    BOOL_VAR    shift, and go to state 72
+    INT_VAR     shift, and go to state 73
+    FLOAT_VAR   shift, and go to state 74
+    CHAR_VAR    shift, and go to state 75
+    ID          shift, and go to state 76
+    LEFT_BRACK  shift, and go to state 77
+    ADD_SUB     shift, and go to state 78
+    NOT         shift, and go to state 79
+    LIST_UNARY  shift, and go to state 80
+
+    Expresion      go to state 111
+    Constantes     go to state 82
+    Const_elem     go to state 83
+    Const_lista    go to state 84
+    Funcion        go to state 85
+    Cabecera_func  go to state 86
+    Ident          go to state 87
+    IdFun          go to state 88
+
+
+State 80
+
+   81 Expresion: LIST_UNARY . Expresion
+
+    error       shift, and go to state 70
+    LEFT_PAR    shift, and go to state 71
+    BOOL_VAR    shift, and go to state 72
+    INT_VAR     shift, and go to state 73
+    FLOAT_VAR   shift, and go to state 74
+    CHAR_VAR    shift, and go to state 75
+    ID          shift, and go to state 76
+    LEFT_BRACK  shift, and go to state 77
+    ADD_SUB     shift, and go to state 78
+    NOT         shift, and go to state 79
+    LIST_UNARY  shift, and go to state 80
+
+    Expresion      go to state 112
+    Constantes     go to state 82
+    Const_elem     go to state 83
+    Const_lista    go to state 84
+    Funcion        go to state 85
+    Cabecera_func  go to state 86
+    Ident          go to state 87
+    IdFun          go to state 88
+
+
+State 81
+
+   57 Sentencia_return: RETURN Expresion . SEMICOLON
+   70 Expresion: Expresion . LOGIC_OR Expresion
+   71          | Expresion . LOGIC_AND Expresion
+   72          | Expresion . XOR Expresion
+   73          | Expresion . BIT_OR Expresion
+   74          | Expresion . BIT_AND Expresion
+   76          | Expresion . ADD_SUB Expresion
+   77          | Expresion . MULT Expresion
+   78          | Expresion . EQ_NEQ Expresion
+   79          | Expresion . VALUE_COMP Expresion
+   80          | Expresion . LIST_BIN Expresion
+   82          | Expresion . DECR Expresion
+   83          | Expresion . INCR Expresion TERNARY Expresion
+
+    SEMICOLON   shift, and go to state 113
+    INCR        shift, and go to state 114
+    DECR        shift, and go to state 115
+    LOGIC_OR    shift, and go to state 116
+    LOGIC_AND   shift, and go to state 117
+    BIT_OR      shift, and go to state 118
+    XOR         shift, and go to state 119
+    BIT_AND     shift, and go to state 120
+    EQ_NEQ      shift, and go to state 121
+    VALUE_COMP  shift, and go to state 122
+    ADD_SUB     shift, and go to state 123
+    MULT        shift, and go to state 124
+    LIST_BIN    shift, and go to state 125
+
+
+State 82
+
+   86 Expresion: Constantes .
+
+    $default  reduce using rule 86 (Expresion)
+
+
+State 83
+
+   88 Constantes: Const_elem .
+
+    $default  reduce using rule 88 (Constantes)
+
+
+State 84
+
+   89 Constantes: Const_lista .
+
+    $default  reduce using rule 89 (Constantes)
+
+
+State 85
+
+   85 Expresion: Funcion .
+
+    $default  reduce using rule 85 (Expresion)
+
+
+State 86
+
+   95 Funcion: Cabecera_func . Lista_expresiones RIGHT_PAR
+   96        | Cabecera_func . RIGHT_PAR
+
+    error       shift, and go to state 70
+    LEFT_PAR    shift, and go to state 71
+    RIGHT_PAR   shift, and go to state 126
+    BOOL_VAR    shift, and go to state 72
+    INT_VAR     shift, and go to state 73
+    FLOAT_VAR   shift, and go to state 74
+    CHAR_VAR    shift, and go to state 75
+    ID          shift, and go to state 76
+    LEFT_BRACK  shift, and go to state 77
+    ADD_SUB     shift, and go to state 78
+    NOT         shift, and go to state 79
+    LIST_UNARY  shift, and go to state 80
+
+    Expresion          go to state 108
+    Constantes         go to state 82
+    Const_elem         go to state 83
+    Const_lista        go to state 84
+    Funcion            go to state 85
+    Cabecera_func      go to state 86
+    Lista_expresiones  go to state 127
+    Ident              go to state 87
+    IdFun              go to state 88
+
+
+State 87
+
+   84 Expresion: Ident .
+
+    $default  reduce using rule 84 (Expresion)
+
+
+State 88
+
+   97 Cabecera_func: IdFun . LEFT_PAR
+
+    LEFT_PAR  shift, and go to state 128
+
+
+State 89
+
+   55 Sentencia_entrada: READ Ident . SEMICOLON
+
+    SEMICOLON  shift, and go to state 129
+
+
+State 90
+
+   67 Lista_expresiones_o_cadena: STRING .
+
+    $default  reduce using rule 67 (Lista_expresiones_o_cadena)
+
+
+State 91
+
+   56 Sentencia_salida: WRITE Lista_expresiones_o_cadena . SEMICOLON
+   64 Lista_expresiones_o_cadena: Lista_expresiones_o_cadena . COMMA Expresion
+   65                           | Lista_expresiones_o_cadena . COMMA STRING
+
+    SEMICOLON  shift, and go to state 130
+    COMMA      shift, and go to state 131
+
+
+State 92
+
+   66 Lista_expresiones_o_cadena: Expresion .
+   70 Expresion: Expresion . LOGIC_OR Expresion
+   71          | Expresion . LOGIC_AND Expresion
+   72          | Expresion . XOR Expresion
+   73          | Expresion . BIT_OR Expresion
+   74          | Expresion . BIT_AND Expresion
+   76          | Expresion . ADD_SUB Expresion
+   77          | Expresion . MULT Expresion
+   78          | Expresion . EQ_NEQ Expresion
+   79          | Expresion . VALUE_COMP Expresion
+   80          | Expresion . LIST_BIN Expresion
+   82          | Expresion . DECR Expresion
+   83          | Expresion . INCR Expresion TERNARY Expresion
+
+    INCR        shift, and go to state 114
+    DECR        shift, and go to state 115
+    LOGIC_OR    shift, and go to state 116
+    LOGIC_AND   shift, and go to state 117
+    BIT_OR      shift, and go to state 118
+    XOR         shift, and go to state 119
+    BIT_AND     shift, and go to state 120
+    EQ_NEQ      shift, and go to state 121
+    VALUE_COMP  shift, and go to state 122
+    ADD_SUB     shift, and go to state 123
+    MULT        shift, and go to state 124
+    LIST_BIN    shift, and go to state 125
+
+    $default  reduce using rule 66 (Lista_expresiones_o_cadena)
+
+
+State 93
+
+   37 Sentencia: LIST_HEAD Ident . SEMICOLON
+
+    SEMICOLON  shift, and go to state 132
+
+
+State 94
+
+   47 Sentencia_if: IF . LEFT_PAR Expresion $@11 Sentencia_if2
+
+    LEFT_PAR  shift, and go to state 133
+
+
+State 95
+
+   41 Sentencia: $@8 Sentencia_if .
+
+    $default  reduce using rule 41 (Sentencia)
+
+
+State 96
+
+   53 Sentencia_while: WHILE . LEFT_PAR Expresion $@13 Sentencia_while2
+
+    LEFT_PAR  shift, and go to state 134
+
+
+State 97
+
+   43 Sentencia: $@9 Sentencia_while .
+
+    $default  reduce using rule 43 (Sentencia)
+
+
+State 98
+
+   38 Sentencia: Ident AHEADBACK . SEMICOLON
+
+    SEMICOLON  shift, and go to state 135
+
+
+State 99
+
+   45 Sentencia_asignacion: Ident $@10 . ASSIGN Expresion SEMICOLON
+
+    ASSIGN  shift, and go to state 136
+
+
+State 100
+
+   22 Cabecera_subprog: Tipo ID $@7 LEFT_PAR . Lista_parametros RIGHT_PAR
+
+    error      shift, and go to state 13
+    ELEM_TYPE  shift, and go to state 5
+    LIST       shift, and go to state 6
+
+    COMMA      reduce using rule 26 (Lista_parametros)
+    RIGHT_PAR  reduce using rule 26 (Lista_parametros)
+
+    Lista_parametros  go to state 137
+    Parametros        go to state 15
+    Tipo              go to state 16
+
+
+State 101
+
+    6 Bloque: OPEN_BLOCK $@3 VAR Variables_locales ENDVAR $@4 Declar_de_subprogs . Sentencias END_BLOCK
+
+    $default  reduce using rule 30 (Sentencias)
+
+    Sentencias  go to state 138
+
+
+State 102
+
+   17 Cuerpo_declar_variables: Tipo Lista_identificador SEMICOLON .
+
+    $default  reduce using rule 17 (Cuerpo_declar_variables)
+
+
+State 103
+
+   19 Lista_identificador: Lista_identificador COMMA . ID
+
+    ID  shift, and go to state 139
+
+
+State 104
+
+   61 Sentencias_case: CASE . Expresion COLON Bloque Sentencias_case
+
+    error       shift, and go to state 70
+    LEFT_PAR    shift, and go to state 71
+    BOOL_VAR    shift, and go to state 72
+    INT_VAR     shift, and go to state 73
+    FLOAT_VAR   shift, and go to state 74
+    CHAR_VAR    shift, and go to state 75
+    ID          shift, and go to state 76
+    LEFT_BRACK  shift, and go to state 77
+    ADD_SUB     shift, and go to state 78
+    NOT         shift, and go to state 79
+    LIST_UNARY  shift, and go to state 80
+
+    Expresion      go to state 140
+    Constantes     go to state 82
+    Const_elem     go to state 83
+    Const_lista    go to state 84
+    Funcion        go to state 85
+    Cabecera_func  go to state 86
+    Ident          go to state 87
+    IdFun          go to state 88
+
+
+State 105
+
+   62 Sentencias_case: DEFAULT . COLON Bloque Sentencias_case
+
+    COLON  shift, and go to state 141
+
+
+State 106
+
+   60 Bloque_switch: OPEN_BLOCK Sentencias_case . END_BLOCK
+
+    END_BLOCK  shift, and go to state 142
+
+
+State 107
+
+   68 Expresion: LEFT_PAR Expresion . RIGHT_PAR
+   70          | Expresion . LOGIC_OR Expresion
+   71          | Expresion . LOGIC_AND Expresion
+   72          | Expresion . XOR Expresion
+   73          | Expresion . BIT_OR Expresion
+   74          | Expresion . BIT_AND Expresion
+   76          | Expresion . ADD_SUB Expresion
+   77          | Expresion . MULT Expresion
+   78          | Expresion . EQ_NEQ Expresion
+   79          | Expresion . VALUE_COMP Expresion
+   80          | Expresion . LIST_BIN Expresion
+   82          | Expresion . DECR Expresion
+   83          | Expresion . INCR Expresion TERNARY Expresion
+
+    RIGHT_PAR   shift, and go to state 143
+    INCR        shift, and go to state 114
+    DECR        shift, and go to state 115
+    LOGIC_OR    shift, and go to state 116
+    LOGIC_AND   shift, and go to state 117
+    BIT_OR      shift, and go to state 118
+    XOR         shift, and go to state 119
+    BIT_AND     shift, and go to state 120
+    EQ_NEQ      shift, and go to state 121
+    VALUE_COMP  shift, and go to state 122
+    ADD_SUB     shift, and go to state 123
+    MULT        shift, and go to state 124
+    LIST_BIN    shift, and go to state 125
+
+
+State 108
+
+   70 Expresion: Expresion . LOGIC_OR Expresion
+   71          | Expresion . LOGIC_AND Expresion
+   72          | Expresion . XOR Expresion
+   73          | Expresion . BIT_OR Expresion
+   74          | Expresion . BIT_AND Expresion
+   76          | Expresion . ADD_SUB Expresion
+   77          | Expresion . MULT Expresion
+   78          | Expresion . EQ_NEQ Expresion
+   79          | Expresion . VALUE_COMP Expresion
+   80          | Expresion . LIST_BIN Expresion
+   82          | Expresion . DECR Expresion
+   83          | Expresion . INCR Expresion TERNARY Expresion
+   99 Lista_expresiones: Expresion .
+
+    INCR        shift, and go to state 114
+    DECR        shift, and go to state 115
+    LOGIC_OR    shift, and go to state 116
+    LOGIC_AND   shift, and go to state 117
+    BIT_OR      shift, and go to state 118
+    XOR         shift, and go to state 119
+    BIT_AND     shift, and go to state 120
+    EQ_NEQ      shift, and go to state 121
+    VALUE_COMP  shift, and go to state 122
+    ADD_SUB     shift, and go to state 123
+    MULT        shift, and go to state 124
+    LIST_BIN    shift, and go to state 125
+
+    $default  reduce using rule 99 (Lista_expresiones)
+
+
+State 109
+
+   94 Const_lista: LEFT_BRACK Lista_expresiones . RIGHT_BRACK
+   98 Lista_expresiones: Lista_expresiones . COMMA Expresion
+
+    COMMA        shift, and go to state 144
+    RIGHT_BRACK  shift, and go to state 145
+
+
+State 110
+
+   70 Expresion: Expresion . LOGIC_OR Expresion
+   71          | Expresion . LOGIC_AND Expresion
+   72          | Expresion . XOR Expresion
+   73          | Expresion . BIT_OR Expresion
+   74          | Expresion . BIT_AND Expresion
+   75          | ADD_SUB Expresion .
+   76          | Expresion . ADD_SUB Expresion
+   77          | Expresion . MULT Expresion
+   78          | Expresion . EQ_NEQ Expresion
+   79          | Expresion . VALUE_COMP Expresion
+   80          | Expresion . LIST_BIN Expresion
+   82          | Expresion . DECR Expresion
+   83          | Expresion . INCR Expresion TERNARY Expresion
+
+    INCR  shift, and go to state 114
+    DECR  shift, and go to state 115
+
+    $default  reduce using rule 75 (Expresion)
+
+
+State 111
+
+   69 Expresion: NOT Expresion .
+   70          | Expresion . LOGIC_OR Expresion
+   71          | Expresion . LOGIC_AND Expresion
+   72          | Expresion . XOR Expresion
+   73          | Expresion . BIT_OR Expresion
+   74          | Expresion . BIT_AND Expresion
+   76          | Expresion . ADD_SUB Expresion
+   77          | Expresion . MULT Expresion
+   78          | Expresion . EQ_NEQ Expresion
+   79          | Expresion . VALUE_COMP Expresion
+   80          | Expresion . LIST_BIN Expresion
+   82          | Expresion . DECR Expresion
+   83          | Expresion . INCR Expresion TERNARY Expresion
+
+    INCR  shift, and go to state 114
+    DECR  shift, and go to state 115
+
+    $default  reduce using rule 69 (Expresion)
+
+
+State 112
+
+   70 Expresion: Expresion . LOGIC_OR Expresion
+   71          | Expresion . LOGIC_AND Expresion
+   72          | Expresion . XOR Expresion
+   73          | Expresion . BIT_OR Expresion
+   74          | Expresion . BIT_AND Expresion
+   76          | Expresion . ADD_SUB Expresion
+   77          | Expresion . MULT Expresion
+   78          | Expresion . EQ_NEQ Expresion
+   79          | Expresion . VALUE_COMP Expresion
+   80          | Expresion . LIST_BIN Expresion
+   81          | LIST_UNARY Expresion .
+   82          | Expresion . DECR Expresion
+   83          | Expresion . INCR Expresion TERNARY Expresion
+
+    INCR  shift, and go to state 114
+    DECR  shift, and go to state 115
+
+    $default  reduce using rule 81 (Expresion)
+
+
+State 113
+
+   57 Sentencia_return: RETURN Expresion SEMICOLON .
+
+    $default  reduce using rule 57 (Sentencia_return)
+
+
+State 114
+
+   83 Expresion: Expresion INCR . Expresion TERNARY Expresion
+
+    error       shift, and go to state 70
+    LEFT_PAR    shift, and go to state 71
+    BOOL_VAR    shift, and go to state 72
+    INT_VAR     shift, and go to state 73
+    FLOAT_VAR   shift, and go to state 74
+    CHAR_VAR    shift, and go to state 75
+    ID          shift, and go to state 76
+    LEFT_BRACK  shift, and go to state 77
+    ADD_SUB     shift, and go to state 78
+    NOT         shift, and go to state 79
+    LIST_UNARY  shift, and go to state 80
+
+    Expresion      go to state 146
+    Constantes     go to state 82
+    Const_elem     go to state 83
+    Const_lista    go to state 84
+    Funcion        go to state 85
+    Cabecera_func  go to state 86
+    Ident          go to state 87
+    IdFun          go to state 88
+
+
+State 115
+
+   82 Expresion: Expresion DECR . Expresion
+
+    error       shift, and go to state 70
+    LEFT_PAR    shift, and go to state 71
+    BOOL_VAR    shift, and go to state 72
+    INT_VAR     shift, and go to state 73
+    FLOAT_VAR   shift, and go to state 74
+    CHAR_VAR    shift, and go to state 75
+    ID          shift, and go to state 76
+    LEFT_BRACK  shift, and go to state 77
+    ADD_SUB     shift, and go to state 78
+    NOT         shift, and go to state 79
+    LIST_UNARY  shift, and go to state 80
+
+    Expresion      go to state 147
+    Constantes     go to state 82
+    Const_elem     go to state 83
+    Const_lista    go to state 84
+    Funcion        go to state 85
+    Cabecera_func  go to state 86
+    Ident          go to state 87
+    IdFun          go to state 88
+
+
+State 116
+
+   70 Expresion: Expresion LOGIC_OR . Expresion
+
+    error       shift, and go to state 70
+    LEFT_PAR    shift, and go to state 71
+    BOOL_VAR    shift, and go to state 72
+    INT_VAR     shift, and go to state 73
+    FLOAT_VAR   shift, and go to state 74
+    CHAR_VAR    shift, and go to state 75
+    ID          shift, and go to state 76
+    LEFT_BRACK  shift, and go to state 77
+    ADD_SUB     shift, and go to state 78
+    NOT         shift, and go to state 79
+    LIST_UNARY  shift, and go to state 80
+
+    Expresion      go to state 148
+    Constantes     go to state 82
+    Const_elem     go to state 83
+    Const_lista    go to state 84
+    Funcion        go to state 85
+    Cabecera_func  go to state 86
+    Ident          go to state 87
+    IdFun          go to state 88
+
+
+State 117
+
+   71 Expresion: Expresion LOGIC_AND . Expresion
+
+    error       shift, and go to state 70
+    LEFT_PAR    shift, and go to state 71
+    BOOL_VAR    shift, and go to state 72
+    INT_VAR     shift, and go to state 73
+    FLOAT_VAR   shift, and go to state 74
+    CHAR_VAR    shift, and go to state 75
+    ID          shift, and go to state 76
+    LEFT_BRACK  shift, and go to state 77
+    ADD_SUB     shift, and go to state 78
+    NOT         shift, and go to state 79
+    LIST_UNARY  shift, and go to state 80
+
+    Expresion      go to state 149
+    Constantes     go to state 82
+    Const_elem     go to state 83
+    Const_lista    go to state 84
+    Funcion        go to state 85
+    Cabecera_func  go to state 86
+    Ident          go to state 87
+    IdFun          go to state 88
+
+
+State 118
+
+   73 Expresion: Expresion BIT_OR . Expresion
+
+    error       shift, and go to state 70
+    LEFT_PAR    shift, and go to state 71
+    BOOL_VAR    shift, and go to state 72
+    INT_VAR     shift, and go to state 73
+    FLOAT_VAR   shift, and go to state 74
+    CHAR_VAR    shift, and go to state 75
+    ID          shift, and go to state 76
+    LEFT_BRACK  shift, and go to state 77
+    ADD_SUB     shift, and go to state 78
+    NOT         shift, and go to state 79
+    LIST_UNARY  shift, and go to state 80
+
+    Expresion      go to state 150
+    Constantes     go to state 82
+    Const_elem     go to state 83
+    Const_lista    go to state 84
+    Funcion        go to state 85
+    Cabecera_func  go to state 86
+    Ident          go to state 87
+    IdFun          go to state 88
+
+
+State 119
+
+   72 Expresion: Expresion XOR . Expresion
+
+    error       shift, and go to state 70
+    LEFT_PAR    shift, and go to state 71
+    BOOL_VAR    shift, and go to state 72
+    INT_VAR     shift, and go to state 73
+    FLOAT_VAR   shift, and go to state 74
+    CHAR_VAR    shift, and go to state 75
+    ID          shift, and go to state 76
+    LEFT_BRACK  shift, and go to state 77
+    ADD_SUB     shift, and go to state 78
+    NOT         shift, and go to state 79
+    LIST_UNARY  shift, and go to state 80
+
+    Expresion      go to state 151
+    Constantes     go to state 82
+    Const_elem     go to state 83
+    Const_lista    go to state 84
+    Funcion        go to state 85
+    Cabecera_func  go to state 86
+    Ident          go to state 87
+    IdFun          go to state 88
+
+
+State 120
+
+   74 Expresion: Expresion BIT_AND . Expresion
+
+    error       shift, and go to state 70
+    LEFT_PAR    shift, and go to state 71
+    BOOL_VAR    shift, and go to state 72
+    INT_VAR     shift, and go to state 73
+    FLOAT_VAR   shift, and go to state 74
+    CHAR_VAR    shift, and go to state 75
+    ID          shift, and go to state 76
+    LEFT_BRACK  shift, and go to state 77
+    ADD_SUB     shift, and go to state 78
+    NOT         shift, and go to state 79
+    LIST_UNARY  shift, and go to state 80
+
+    Expresion      go to state 152
+    Constantes     go to state 82
+    Const_elem     go to state 83
+    Const_lista    go to state 84
+    Funcion        go to state 85
+    Cabecera_func  go to state 86
+    Ident          go to state 87
+    IdFun          go to state 88
+
+
+State 121
+
+   78 Expresion: Expresion EQ_NEQ . Expresion
+
+    error       shift, and go to state 70
+    LEFT_PAR    shift, and go to state 71
+    BOOL_VAR    shift, and go to state 72
+    INT_VAR     shift, and go to state 73
+    FLOAT_VAR   shift, and go to state 74
+    CHAR_VAR    shift, and go to state 75
+    ID          shift, and go to state 76
+    LEFT_BRACK  shift, and go to state 77
+    ADD_SUB     shift, and go to state 78
+    NOT         shift, and go to state 79
+    LIST_UNARY  shift, and go to state 80
+
+    Expresion      go to state 153
+    Constantes     go to state 82
+    Const_elem     go to state 83
+    Const_lista    go to state 84
+    Funcion        go to state 85
+    Cabecera_func  go to state 86
+    Ident          go to state 87
+    IdFun          go to state 88
+
+
+State 122
+
+   79 Expresion: Expresion VALUE_COMP . Expresion
+
+    error       shift, and go to state 70
+    LEFT_PAR    shift, and go to state 71
+    BOOL_VAR    shift, and go to state 72
+    INT_VAR     shift, and go to state 73
+    FLOAT_VAR   shift, and go to state 74
+    CHAR_VAR    shift, and go to state 75
+    ID          shift, and go to state 76
+    LEFT_BRACK  shift, and go to state 77
+    ADD_SUB     shift, and go to state 78
+    NOT         shift, and go to state 79
+    LIST_UNARY  shift, and go to state 80
+
+    Expresion      go to state 154
+    Constantes     go to state 82
+    Const_elem     go to state 83
+    Const_lista    go to state 84
+    Funcion        go to state 85
+    Cabecera_func  go to state 86
+    Ident          go to state 87
+    IdFun          go to state 88
+
+
+State 123
+
+   76 Expresion: Expresion ADD_SUB . Expresion
+
+    error       shift, and go to state 70
+    LEFT_PAR    shift, and go to state 71
+    BOOL_VAR    shift, and go to state 72
+    INT_VAR     shift, and go to state 73
+    FLOAT_VAR   shift, and go to state 74
+    CHAR_VAR    shift, and go to state 75
+    ID          shift, and go to state 76
+    LEFT_BRACK  shift, and go to state 77
+    ADD_SUB     shift, and go to state 78
+    NOT         shift, and go to state 79
+    LIST_UNARY  shift, and go to state 80
+
+    Expresion      go to state 155
+    Constantes     go to state 82
+    Const_elem     go to state 83
+    Const_lista    go to state 84
+    Funcion        go to state 85
+    Cabecera_func  go to state 86
+    Ident          go to state 87
+    IdFun          go to state 88
+
+
+State 124
+
+   77 Expresion: Expresion MULT . Expresion
+
+    error       shift, and go to state 70
+    LEFT_PAR    shift, and go to state 71
+    BOOL_VAR    shift, and go to state 72
+    INT_VAR     shift, and go to state 73
+    FLOAT_VAR   shift, and go to state 74
+    CHAR_VAR    shift, and go to state 75
+    ID          shift, and go to state 76
+    LEFT_BRACK  shift, and go to state 77
+    ADD_SUB     shift, and go to state 78
+    NOT         shift, and go to state 79
+    LIST_UNARY  shift, and go to state 80
+
+    Expresion      go to state 156
+    Constantes     go to state 82
+    Const_elem     go to state 83
+    Const_lista    go to state 84
+    Funcion        go to state 85
+    Cabecera_func  go to state 86
+    Ident          go to state 87
+    IdFun          go to state 88
+
+
+State 125
+
+   80 Expresion: Expresion LIST_BIN . Expresion
+
+    error       shift, and go to state 70
+    LEFT_PAR    shift, and go to state 71
+    BOOL_VAR    shift, and go to state 72
+    INT_VAR     shift, and go to state 73
+    FLOAT_VAR   shift, and go to state 74
+    CHAR_VAR    shift, and go to state 75
+    ID          shift, and go to state 76
+    LEFT_BRACK  shift, and go to state 77
+    ADD_SUB     shift, and go to state 78
+    NOT         shift, and go to state 79
+    LIST_UNARY  shift, and go to state 80
+
+    Expresion      go to state 157
+    Constantes     go to state 82
+    Const_elem     go to state 83
+    Const_lista    go to state 84
+    Funcion        go to state 85
+    Cabecera_func  go to state 86
+    Ident          go to state 87
+    IdFun          go to state 88
+
+
+State 126
+
+   96 Funcion: Cabecera_func RIGHT_PAR .
+
+    $default  reduce using rule 96 (Funcion)
+
+
+State 127
+
+   95 Funcion: Cabecera_func Lista_expresiones . RIGHT_PAR
+   98 Lista_expresiones: Lista_expresiones . COMMA Expresion
+
+    COMMA      shift, and go to state 144
+    RIGHT_PAR  shift, and go to state 158
+
+
+State 128
+
+   97 Cabecera_func: IdFun LEFT_PAR .
+
+    $default  reduce using rule 97 (Cabecera_func)
+
+
+State 129
+
+   55 Sentencia_entrada: READ Ident SEMICOLON .
+
+    $default  reduce using rule 55 (Sentencia_entrada)
+
+
+State 130
+
+   56 Sentencia_salida: WRITE Lista_expresiones_o_cadena SEMICOLON .
+
+    $default  reduce using rule 56 (Sentencia_salida)
+
+
+State 131
+
+   64 Lista_expresiones_o_cadena: Lista_expresiones_o_cadena COMMA . Expresion
+   65                           | Lista_expresiones_o_cadena COMMA . STRING
+
+    error       shift, and go to state 70
+    LEFT_PAR    shift, and go to state 71
+    BOOL_VAR    shift, and go to state 72
+    INT_VAR     shift, and go to state 73
+    FLOAT_VAR   shift, and go to state 74
+    CHAR_VAR    shift, and go to state 75
+    STRING      shift, and go to state 159
+    ID          shift, and go to state 76
+    LEFT_BRACK  shift, and go to state 77
+    ADD_SUB     shift, and go to state 78
+    NOT         shift, and go to state 79
+    LIST_UNARY  shift, and go to state 80
+
+    Expresion      go to state 160
+    Constantes     go to state 82
+    Const_elem     go to state 83
+    Const_lista    go to state 84
+    Funcion        go to state 85
+    Cabecera_func  go to state 86
+    Ident          go to state 87
+    IdFun          go to state 88
+
+
+State 132
+
+   37 Sentencia: LIST_HEAD Ident SEMICOLON .
+
+    $default  reduce using rule 37 (Sentencia)
+
+
+State 133
+
+   47 Sentencia_if: IF LEFT_PAR . Expresion $@11 Sentencia_if2
+
+    error       shift, and go to state 70
+    LEFT_PAR    shift, and go to state 71
+    BOOL_VAR    shift, and go to state 72
+    INT_VAR     shift, and go to state 73
+    FLOAT_VAR   shift, and go to state 74
+    CHAR_VAR    shift, and go to state 75
+    ID          shift, and go to state 76
+    LEFT_BRACK  shift, and go to state 77
+    ADD_SUB     shift, and go to state 78
+    NOT         shift, and go to state 79
+    LIST_UNARY  shift, and go to state 80
+
+    Expresion      go to state 161
+    Constantes     go to state 82
+    Const_elem     go to state 83
+    Const_lista    go to state 84
+    Funcion        go to state 85
+    Cabecera_func  go to state 86
+    Ident          go to state 87
+    IdFun          go to state 88
+
+
+State 134
+
+   53 Sentencia_while: WHILE LEFT_PAR . Expresion $@13 Sentencia_while2
+
+    error       shift, and go to state 70
+    LEFT_PAR    shift, and go to state 71
+    BOOL_VAR    shift, and go to state 72
+    INT_VAR     shift, and go to state 73
+    FLOAT_VAR   shift, and go to state 74
+    CHAR_VAR    shift, and go to state 75
+    ID          shift, and go to state 76
+    LEFT_BRACK  shift, and go to state 77
+    ADD_SUB     shift, and go to state 78
+    NOT         shift, and go to state 79
+    LIST_UNARY  shift, and go to state 80
+
+    Expresion      go to state 162
+    Constantes     go to state 82
+    Const_elem     go to state 83
+    Const_lista    go to state 84
+    Funcion        go to state 85
+    Cabecera_func  go to state 86
+    Ident          go to state 87
+    IdFun          go to state 88
+
+
+State 135
+
+   38 Sentencia: Ident AHEADBACK SEMICOLON .
+
+    $default  reduce using rule 38 (Sentencia)
+
+
+State 136
+
+   45 Sentencia_asignacion: Ident $@10 ASSIGN . Expresion SEMICOLON
+
+    error       shift, and go to state 70
+    LEFT_PAR    shift, and go to state 71
+    BOOL_VAR    shift, and go to state 72
+    INT_VAR     shift, and go to state 73
+    FLOAT_VAR   shift, and go to state 74
+    CHAR_VAR    shift, and go to state 75
+    ID          shift, and go to state 76
+    LEFT_BRACK  shift, and go to state 77
+    ADD_SUB     shift, and go to state 78
+    NOT         shift, and go to state 79
+    LIST_UNARY  shift, and go to state 80
+
+    Expresion      go to state 163
+    Constantes     go to state 82
+    Const_elem     go to state 83
+    Const_lista    go to state 84
+    Funcion        go to state 85
+    Cabecera_func  go to state 86
+    Ident          go to state 87
+    IdFun          go to state 88
+
+
+State 137
+
+   22 Cabecera_subprog: Tipo ID $@7 LEFT_PAR Lista_parametros . RIGHT_PAR
+   24 Lista_parametros: Lista_parametros . COMMA Parametros
+
+    COMMA      shift, and go to state 20
+    RIGHT_PAR  shift, and go to state 164
+
+
+State 138
+
+    6 Bloque: OPEN_BLOCK $@3 VAR Variables_locales ENDVAR $@4 Declar_de_subprogs Sentencias . END_BLOCK
+   29 Sentencias: Sentencias . Sentencia
+
+    OPEN_BLOCK  shift, and go to state 17
+    END_BLOCK   shift, and go to state 165
+    SWITCH      shift, and go to state 44
+    BREAK       shift, and go to state 45
+    RETURN      shift, and go to state 46
+    READ        shift, and go to state 47
+    WRITE       shift, and go to state 48
+    ID          shift, and go to state 49
+    LIST_HEAD   shift, and go to state 50
+
+    WHILE     reduce using rule 42 ($@9)
+    $default  reduce using rule 40 ($@8)
+
+    Bloque                go to state 51
+    Sentencia             go to state 52
+    $@8                   go to state 53
+    $@9                   go to state 54
+    Sentencia_asignacion  go to state 55
+    Sentencia_entrada     go to state 56
+    Sentencia_salida      go to state 57
+    Sentencia_return      go to state 58
+    Sentencia_switch      go to state 59
+    Sentencia_break       go to state 60
+    Ident                 go to state 61
+
+
+State 139
+
+   19 Lista_identificador: Lista_identificador COMMA ID .
+
+    $default  reduce using rule 19 (Lista_identificador)
+
+
+State 140
+
+   61 Sentencias_case: CASE Expresion . COLON Bloque Sentencias_case
+   70 Expresion: Expresion . LOGIC_OR Expresion
+   71          | Expresion . LOGIC_AND Expresion
+   72          | Expresion . XOR Expresion
+   73          | Expresion . BIT_OR Expresion
+   74          | Expresion . BIT_AND Expresion
+   76          | Expresion . ADD_SUB Expresion
+   77          | Expresion . MULT Expresion
+   78          | Expresion . EQ_NEQ Expresion
+   79          | Expresion . VALUE_COMP Expresion
+   80          | Expresion . LIST_BIN Expresion
+   82          | Expresion . DECR Expresion
+   83          | Expresion . INCR Expresion TERNARY Expresion
+
+    INCR        shift, and go to state 114
+    DECR        shift, and go to state 115
+    COLON       shift, and go to state 166
+    LOGIC_OR    shift, and go to state 116
+    LOGIC_AND   shift, and go to state 117
+    BIT_OR      shift, and go to state 118
+    XOR         shift, and go to state 119
+    BIT_AND     shift, and go to state 120
+    EQ_NEQ      shift, and go to state 121
+    VALUE_COMP  shift, and go to state 122
+    ADD_SUB     shift, and go to state 123
+    MULT        shift, and go to state 124
+    LIST_BIN    shift, and go to state 125
+
+
+State 141
+
+   62 Sentencias_case: DEFAULT COLON . Bloque Sentencias_case
+
+    OPEN_BLOCK  shift, and go to state 17
+
+    Bloque  go to state 167
+
+
+State 142
+
+   60 Bloque_switch: OPEN_BLOCK Sentencias_case END_BLOCK .
+
+    $default  reduce using rule 60 (Bloque_switch)
+
+
+State 143
+
+   68 Expresion: LEFT_PAR Expresion RIGHT_PAR .
+
+    $default  reduce using rule 68 (Expresion)
+
+
+State 144
+
+   98 Lista_expresiones: Lista_expresiones COMMA . Expresion
+
+    error       shift, and go to state 70
+    LEFT_PAR    shift, and go to state 71
+    BOOL_VAR    shift, and go to state 72
+    INT_VAR     shift, and go to state 73
+    FLOAT_VAR   shift, and go to state 74
+    CHAR_VAR    shift, and go to state 75
+    ID          shift, and go to state 76
+    LEFT_BRACK  shift, and go to state 77
+    ADD_SUB     shift, and go to state 78
+    NOT         shift, and go to state 79
+    LIST_UNARY  shift, and go to state 80
+
+    Expresion      go to state 168
+    Constantes     go to state 82
+    Const_elem     go to state 83
+    Const_lista    go to state 84
+    Funcion        go to state 85
+    Cabecera_func  go to state 86
+    Ident          go to state 87
+    IdFun          go to state 88
+
+
+State 145
+
+   94 Const_lista: LEFT_BRACK Lista_expresiones RIGHT_BRACK .
+
+    $default  reduce using rule 94 (Const_lista)
+
+
+State 146
+
+   70 Expresion: Expresion . LOGIC_OR Expresion
+   71          | Expresion . LOGIC_AND Expresion
+   72          | Expresion . XOR Expresion
+   73          | Expresion . BIT_OR Expresion
+   74          | Expresion . BIT_AND Expresion
+   76          | Expresion . ADD_SUB Expresion
+   77          | Expresion . MULT Expresion
+   78          | Expresion . EQ_NEQ Expresion
+   79          | Expresion . VALUE_COMP Expresion
+   80          | Expresion . LIST_BIN Expresion
+   82          | Expresion . DECR Expresion
+   83          | Expresion . INCR Expresion TERNARY Expresion
+   83          | Expresion INCR Expresion . TERNARY Expresion
+
+    INCR        shift, and go to state 114
+    DECR        shift, and go to state 115
+    TERNARY     shift, and go to state 169
+    LOGIC_OR    shift, and go to state 116
+    LOGIC_AND   shift, and go to state 117
+    BIT_OR      shift, and go to state 118
+    XOR         shift, and go to state 119
+    BIT_AND     shift, and go to state 120
+    EQ_NEQ      shift, and go to state 121
+    VALUE_COMP  shift, and go to state 122
+    ADD_SUB     shift, and go to state 123
+    MULT        shift, and go to state 124
+    LIST_BIN    shift, and go to state 125
+
+
+State 147
+
+   70 Expresion: Expresion . LOGIC_OR Expresion
+   71          | Expresion . LOGIC_AND Expresion
+   72          | Expresion . XOR Expresion
+   73          | Expresion . BIT_OR Expresion
+   74          | Expresion . BIT_AND Expresion
+   76          | Expresion . ADD_SUB Expresion
+   77          | Expresion . MULT Expresion
+   78          | Expresion . EQ_NEQ Expresion
+   79          | Expresion . VALUE_COMP Expresion
+   80          | Expresion . LIST_BIN Expresion
+   82          | Expresion . DECR Expresion
+   82          | Expresion DECR Expresion .
+   83          | Expresion . INCR Expresion TERNARY Expresion
+
+    INCR  shift, and go to state 114
+    DECR  shift, and go to state 115
+
+    $default  reduce using rule 82 (Expresion)
+
+
+State 148
+
+   70 Expresion: Expresion . LOGIC_OR Expresion
+   70          | Expresion LOGIC_OR Expresion .
+   71          | Expresion . LOGIC_AND Expresion
+   72          | Expresion . XOR Expresion
+   73          | Expresion . BIT_OR Expresion
+   74          | Expresion . BIT_AND Expresion
+   76          | Expresion . ADD_SUB Expresion
+   77          | Expresion . MULT Expresion
+   78          | Expresion . EQ_NEQ Expresion
+   79          | Expresion . VALUE_COMP Expresion
+   80          | Expresion . LIST_BIN Expresion
+   82          | Expresion . DECR Expresion
+   83          | Expresion . INCR Expresion TERNARY Expresion
+
+    INCR        shift, and go to state 114
+    DECR        shift, and go to state 115
+    LOGIC_AND   shift, and go to state 117
+    BIT_OR      shift, and go to state 118
+    XOR         shift, and go to state 119
+    BIT_AND     shift, and go to state 120
+    EQ_NEQ      shift, and go to state 121
+    VALUE_COMP  shift, and go to state 122
+    ADD_SUB     shift, and go to state 123
+    MULT        shift, and go to state 124
+    LIST_BIN    shift, and go to state 125
+
+    $default  reduce using rule 70 (Expresion)
+
+
+State 149
+
+   70 Expresion: Expresion . LOGIC_OR Expresion
+   71          | Expresion . LOGIC_AND Expresion
+   71          | Expresion LOGIC_AND Expresion .
+   72          | Expresion . XOR Expresion
+   73          | Expresion . BIT_OR Expresion
+   74          | Expresion . BIT_AND Expresion
+   76          | Expresion . ADD_SUB Expresion
+   77          | Expresion . MULT Expresion
+   78          | Expresion . EQ_NEQ Expresion
+   79          | Expresion . VALUE_COMP Expresion
+   80          | Expresion . LIST_BIN Expresion
+   82          | Expresion . DECR Expresion
+   83          | Expresion . INCR Expresion TERNARY Expresion
+
+    INCR        shift, and go to state 114
+    DECR        shift, and go to state 115
+    BIT_OR      shift, and go to state 118
+    XOR         shift, and go to state 119
+    BIT_AND     shift, and go to state 120
+    EQ_NEQ      shift, and go to state 121
+    VALUE_COMP  shift, and go to state 122
+    ADD_SUB     shift, and go to state 123
+    MULT        shift, and go to state 124
+    LIST_BIN    shift, and go to state 125
+
+    $default  reduce using rule 71 (Expresion)
+
+
+State 150
+
+   70 Expresion: Expresion . LOGIC_OR Expresion
+   71          | Expresion . LOGIC_AND Expresion
+   72          | Expresion . XOR Expresion
+   73          | Expresion . BIT_OR Expresion
+   73          | Expresion BIT_OR Expresion .
+   74          | Expresion . BIT_AND Expresion
+   76          | Expresion . ADD_SUB Expresion
+   77          | Expresion . MULT Expresion
+   78          | Expresion . EQ_NEQ Expresion
+   79          | Expresion . VALUE_COMP Expresion
+   80          | Expresion . LIST_BIN Expresion
+   82          | Expresion . DECR Expresion
+   83          | Expresion . INCR Expresion TERNARY Expresion
+
+    INCR        shift, and go to state 114
+    DECR        shift, and go to state 115
+    XOR         shift, and go to state 119
+    BIT_AND     shift, and go to state 120
+    EQ_NEQ      shift, and go to state 121
+    VALUE_COMP  shift, and go to state 122
+    ADD_SUB     shift, and go to state 123
+    MULT        shift, and go to state 124
+    LIST_BIN    shift, and go to state 125
+
+    $default  reduce using rule 73 (Expresion)
+
+
+State 151
+
+   70 Expresion: Expresion . LOGIC_OR Expresion
+   71          | Expresion . LOGIC_AND Expresion
+   72          | Expresion . XOR Expresion
+   72          | Expresion XOR Expresion .
+   73          | Expresion . BIT_OR Expresion
+   74          | Expresion . BIT_AND Expresion
+   76          | Expresion . ADD_SUB Expresion
+   77          | Expresion . MULT Expresion
+   78          | Expresion . EQ_NEQ Expresion
+   79          | Expresion . VALUE_COMP Expresion
+   80          | Expresion . LIST_BIN Expresion
+   82          | Expresion . DECR Expresion
+   83          | Expresion . INCR Expresion TERNARY Expresion
+
+    INCR        shift, and go to state 114
+    DECR        shift, and go to state 115
+    BIT_AND     shift, and go to state 120
+    EQ_NEQ      shift, and go to state 121
+    VALUE_COMP  shift, and go to state 122
+    ADD_SUB     shift, and go to state 123
+    MULT        shift, and go to state 124
+    LIST_BIN    shift, and go to state 125
+
+    $default  reduce using rule 72 (Expresion)
+
+
+State 152
+
+   70 Expresion: Expresion . LOGIC_OR Expresion
+   71          | Expresion . LOGIC_AND Expresion
+   72          | Expresion . XOR Expresion
+   73          | Expresion . BIT_OR Expresion
+   74          | Expresion . BIT_AND Expresion
+   74          | Expresion BIT_AND Expresion .
+   76          | Expresion . ADD_SUB Expresion
+   77          | Expresion . MULT Expresion
+   78          | Expresion . EQ_NEQ Expresion
+   79          | Expresion . VALUE_COMP Expresion
+   80          | Expresion . LIST_BIN Expresion
+   82          | Expresion . DECR Expresion
+   83          | Expresion . INCR Expresion TERNARY Expresion
+
+    INCR        shift, and go to state 114
+    DECR        shift, and go to state 115
+    EQ_NEQ      shift, and go to state 121
+    VALUE_COMP  shift, and go to state 122
+    ADD_SUB     shift, and go to state 123
+    MULT        shift, and go to state 124
+    LIST_BIN    shift, and go to state 125
+
+    $default  reduce using rule 74 (Expresion)
+
+
+State 153
+
+   70 Expresion: Expresion . LOGIC_OR Expresion
+   71          | Expresion . LOGIC_AND Expresion
+   72          | Expresion . XOR Expresion
+   73          | Expresion . BIT_OR Expresion
+   74          | Expresion . BIT_AND Expresion
+   76          | Expresion . ADD_SUB Expresion
+   77          | Expresion . MULT Expresion
+   78          | Expresion . EQ_NEQ Expresion
+   78          | Expresion EQ_NEQ Expresion .
+   79          | Expresion . VALUE_COMP Expresion
+   80          | Expresion . LIST_BIN Expresion
+   82          | Expresion . DECR Expresion
+   83          | Expresion . INCR Expresion TERNARY Expresion
+
+    INCR        shift, and go to state 114
+    DECR        shift, and go to state 115
+    VALUE_COMP  shift, and go to state 122
+    ADD_SUB     shift, and go to state 123
+    MULT        shift, and go to state 124
+    LIST_BIN    shift, and go to state 125
+
+    $default  reduce using rule 78 (Expresion)
+
+
+State 154
+
+   70 Expresion: Expresion . LOGIC_OR Expresion
+   71          | Expresion . LOGIC_AND Expresion
+   72          | Expresion . XOR Expresion
+   73          | Expresion . BIT_OR Expresion
+   74          | Expresion . BIT_AND Expresion
+   76          | Expresion . ADD_SUB Expresion
+   77          | Expresion . MULT Expresion
+   78          | Expresion . EQ_NEQ Expresion
+   79          | Expresion . VALUE_COMP Expresion
+   79          | Expresion VALUE_COMP Expresion .
+   80          | Expresion . LIST_BIN Expresion
+   82          | Expresion . DECR Expresion
+   83          | Expresion . INCR Expresion TERNARY Expresion
+
+    INCR      shift, and go to state 114
+    DECR      shift, and go to state 115
+    ADD_SUB   shift, and go to state 123
+    MULT      shift, and go to state 124
+    LIST_BIN  shift, and go to state 125
+
+    $default  reduce using rule 79 (Expresion)
+
+
+State 155
+
+   70 Expresion: Expresion . LOGIC_OR Expresion
+   71          | Expresion . LOGIC_AND Expresion
+   72          | Expresion . XOR Expresion
+   73          | Expresion . BIT_OR Expresion
+   74          | Expresion . BIT_AND Expresion
+   76          | Expresion . ADD_SUB Expresion
+   76          | Expresion ADD_SUB Expresion .
+   77          | Expresion . MULT Expresion
+   78          | Expresion . EQ_NEQ Expresion
+   79          | Expresion . VALUE_COMP Expresion
+   80          | Expresion . LIST_BIN Expresion
+   82          | Expresion . DECR Expresion
+   83          | Expresion . INCR Expresion TERNARY Expresion
+
+    INCR      shift, and go to state 114
+    DECR      shift, and go to state 115
+    MULT      shift, and go to state 124
+    LIST_BIN  shift, and go to state 125
+
+    $default  reduce using rule 76 (Expresion)
+
+
+State 156
+
+   70 Expresion: Expresion . LOGIC_OR Expresion
+   71          | Expresion . LOGIC_AND Expresion
+   72          | Expresion . XOR Expresion
+   73          | Expresion . BIT_OR Expresion
+   74          | Expresion . BIT_AND Expresion
+   76          | Expresion . ADD_SUB Expresion
+   77          | Expresion . MULT Expresion
+   77          | Expresion MULT Expresion .
+   78          | Expresion . EQ_NEQ Expresion
+   79          | Expresion . VALUE_COMP Expresion
+   80          | Expresion . LIST_BIN Expresion
+   82          | Expresion . DECR Expresion
+   83          | Expresion . INCR Expresion TERNARY Expresion
+
+    INCR  shift, and go to state 114
+    DECR  shift, and go to state 115
+
+    $default  reduce using rule 77 (Expresion)
+
+
+State 157
+
+   70 Expresion: Expresion . LOGIC_OR Expresion
+   71          | Expresion . LOGIC_AND Expresion
+   72          | Expresion . XOR Expresion
+   73          | Expresion . BIT_OR Expresion
+   74          | Expresion . BIT_AND Expresion
+   76          | Expresion . ADD_SUB Expresion
+   77          | Expresion . MULT Expresion
+   78          | Expresion . EQ_NEQ Expresion
+   79          | Expresion . VALUE_COMP Expresion
+   80          | Expresion . LIST_BIN Expresion
+   80          | Expresion LIST_BIN Expresion .
+   82          | Expresion . DECR Expresion
+   83          | Expresion . INCR Expresion TERNARY Expresion
+
+    INCR  shift, and go to state 114
+    DECR  shift, and go to state 115
+
+    $default  reduce using rule 80 (Expresion)
+
+
+State 158
+
+   95 Funcion: Cabecera_func Lista_expresiones RIGHT_PAR .
+
+    $default  reduce using rule 95 (Funcion)
+
+
+State 159
+
+   65 Lista_expresiones_o_cadena: Lista_expresiones_o_cadena COMMA STRING .
+
+    $default  reduce using rule 65 (Lista_expresiones_o_cadena)
+
+
+State 160
+
+   64 Lista_expresiones_o_cadena: Lista_expresiones_o_cadena COMMA Expresion .
+   70 Expresion: Expresion . LOGIC_OR Expresion
+   71          | Expresion . LOGIC_AND Expresion
+   72          | Expresion . XOR Expresion
+   73          | Expresion . BIT_OR Expresion
+   74          | Expresion . BIT_AND Expresion
+   76          | Expresion . ADD_SUB Expresion
+   77          | Expresion . MULT Expresion
+   78          | Expresion . EQ_NEQ Expresion
+   79          | Expresion . VALUE_COMP Expresion
+   80          | Expresion . LIST_BIN Expresion
+   82          | Expresion . DECR Expresion
+   83          | Expresion . INCR Expresion TERNARY Expresion
+
+    INCR        shift, and go to state 114
+    DECR        shift, and go to state 115
+    LOGIC_OR    shift, and go to state 116
+    LOGIC_AND   shift, and go to state 117
+    BIT_OR      shift, and go to state 118
+    XOR         shift, and go to state 119
+    BIT_AND     shift, and go to state 120
+    EQ_NEQ      shift, and go to state 121
+    VALUE_COMP  shift, and go to state 122
+    ADD_SUB     shift, and go to state 123
+    MULT        shift, and go to state 124
+    LIST_BIN    shift, and go to state 125
+
+    $default  reduce using rule 64 (Lista_expresiones_o_cadena)
+
+
+State 161
+
+   47 Sentencia_if: IF LEFT_PAR Expresion . $@11 Sentencia_if2
+   70 Expresion: Expresion . LOGIC_OR Expresion
+   71          | Expresion . LOGIC_AND Expresion
+   72          | Expresion . XOR Expresion
+   73          | Expresion . BIT_OR Expresion
+   74          | Expresion . BIT_AND Expresion
+   76          | Expresion . ADD_SUB Expresion
+   77          | Expresion . MULT Expresion
+   78          | Expresion . EQ_NEQ Expresion
+   79          | Expresion . VALUE_COMP Expresion
+   80          | Expresion . LIST_BIN Expresion
+   82          | Expresion . DECR Expresion
+   83          | Expresion . INCR Expresion TERNARY Expresion
+
+    INCR        shift, and go to state 114
+    DECR        shift, and go to state 115
+    LOGIC_OR    shift, and go to state 116
+    LOGIC_AND   shift, and go to state 117
+    BIT_OR      shift, and go to state 118
+    XOR         shift, and go to state 119
+    BIT_AND     shift, and go to state 120
+    EQ_NEQ      shift, and go to state 121
+    VALUE_COMP  shift, and go to state 122
+    ADD_SUB     shift, and go to state 123
+    MULT        shift, and go to state 124
+    LIST_BIN    shift, and go to state 125
+
+    $default  reduce using rule 46 ($@11)
+
+    $@11  go to state 170
+
+
+State 162
+
+   53 Sentencia_while: WHILE LEFT_PAR Expresion . $@13 Sentencia_while2
+   70 Expresion: Expresion . LOGIC_OR Expresion
+   71          | Expresion . LOGIC_AND Expresion
+   72          | Expresion . XOR Expresion
+   73          | Expresion . BIT_OR Expresion
+   74          | Expresion . BIT_AND Expresion
+   76          | Expresion . ADD_SUB Expresion
+   77          | Expresion . MULT Expresion
+   78          | Expresion . EQ_NEQ Expresion
+   79          | Expresion . VALUE_COMP Expresion
+   80          | Expresion . LIST_BIN Expresion
+   82          | Expresion . DECR Expresion
+   83          | Expresion . INCR Expresion TERNARY Expresion
+
+    INCR        shift, and go to state 114
+    DECR        shift, and go to state 115
+    LOGIC_OR    shift, and go to state 116
+    LOGIC_AND   shift, and go to state 117
+    BIT_OR      shift, and go to state 118
+    XOR         shift, and go to state 119
+    BIT_AND     shift, and go to state 120
+    EQ_NEQ      shift, and go to state 121
+    VALUE_COMP  shift, and go to state 122
+    ADD_SUB     shift, and go to state 123
+    MULT        shift, and go to state 124
+    LIST_BIN    shift, and go to state 125
+
+    $default  reduce using rule 52 ($@13)
+
+    $@13  go to state 171
+
+
+State 163
+
+   45 Sentencia_asignacion: Ident $@10 ASSIGN Expresion . SEMICOLON
+   70 Expresion: Expresion . LOGIC_OR Expresion
+   71          | Expresion . LOGIC_AND Expresion
+   72          | Expresion . XOR Expresion
+   73          | Expresion . BIT_OR Expresion
+   74          | Expresion . BIT_AND Expresion
+   76          | Expresion . ADD_SUB Expresion
+   77          | Expresion . MULT Expresion
+   78          | Expresion . EQ_NEQ Expresion
+   79          | Expresion . VALUE_COMP Expresion
+   80          | Expresion . LIST_BIN Expresion
+   82          | Expresion . DECR Expresion
+   83          | Expresion . INCR Expresion TERNARY Expresion
+
+    SEMICOLON   shift, and go to state 172
+    INCR        shift, and go to state 114
+    DECR        shift, and go to state 115
+    LOGIC_OR    shift, and go to state 116
+    LOGIC_AND   shift, and go to state 117
+    BIT_OR      shift, and go to state 118
+    XOR         shift, and go to state 119
+    BIT_AND     shift, and go to state 120
+    EQ_NEQ      shift, and go to state 121
+    VALUE_COMP  shift, and go to state 122
+    ADD_SUB     shift, and go to state 123
+    MULT        shift, and go to state 124
+    LIST_BIN    shift, and go to state 125
+
+
+State 164
+
+   22 Cabecera_subprog: Tipo ID $@7 LEFT_PAR Lista_parametros RIGHT_PAR .
+
+    $default  reduce using rule 22 (Cabecera_subprog)
+
+
+State 165
+
+    6 Bloque: OPEN_BLOCK $@3 VAR Variables_locales ENDVAR $@4 Declar_de_subprogs Sentencias END_BLOCK .
+
+    $default  reduce using rule 6 (Bloque)
+
+
+State 166
+
+   61 Sentencias_case: CASE Expresion COLON . Bloque Sentencias_case
+
+    OPEN_BLOCK  shift, and go to state 17
+
+    Bloque  go to state 173
+
+
+State 167
+
+   62 Sentencias_case: DEFAULT COLON Bloque . Sentencias_case
+
+    CASE     shift, and go to state 104
+    DEFAULT  shift, and go to state 105
+
+    $default  reduce using rule 63 (Sentencias_case)
+
+    Sentencias_case  go to state 174
+
+
+State 168
+
+   70 Expresion: Expresion . LOGIC_OR Expresion
+   71          | Expresion . LOGIC_AND Expresion
+   72          | Expresion . XOR Expresion
+   73          | Expresion . BIT_OR Expresion
+   74          | Expresion . BIT_AND Expresion
+   76          | Expresion . ADD_SUB Expresion
+   77          | Expresion . MULT Expresion
+   78          | Expresion . EQ_NEQ Expresion
+   79          | Expresion . VALUE_COMP Expresion
+   80          | Expresion . LIST_BIN Expresion
+   82          | Expresion . DECR Expresion
+   83          | Expresion . INCR Expresion TERNARY Expresion
+   98 Lista_expresiones: Lista_expresiones COMMA Expresion .
+
+    INCR        shift, and go to state 114
+    DECR        shift, and go to state 115
+    LOGIC_OR    shift, and go to state 116
+    LOGIC_AND   shift, and go to state 117
+    BIT_OR      shift, and go to state 118
+    XOR         shift, and go to state 119
+    BIT_AND     shift, and go to state 120
+    EQ_NEQ      shift, and go to state 121
+    VALUE_COMP  shift, and go to state 122
+    ADD_SUB     shift, and go to state 123
+    MULT        shift, and go to state 124
+    LIST_BIN    shift, and go to state 125
+
+    $default  reduce using rule 98 (Lista_expresiones)
+
+
+State 169
+
+   83 Expresion: Expresion INCR Expresion TERNARY . Expresion
+
+    error       shift, and go to state 70
+    LEFT_PAR    shift, and go to state 71
+    BOOL_VAR    shift, and go to state 72
+    INT_VAR     shift, and go to state 73
+    FLOAT_VAR   shift, and go to state 74
+    CHAR_VAR    shift, and go to state 75
+    ID          shift, and go to state 76
+    LEFT_BRACK  shift, and go to state 77
+    ADD_SUB     shift, and go to state 78
+    NOT         shift, and go to state 79
+    LIST_UNARY  shift, and go to state 80
+
+    Expresion      go to state 175
+    Constantes     go to state 82
+    Const_elem     go to state 83
+    Const_lista    go to state 84
+    Funcion        go to state 85
+    Cabecera_func  go to state 86
+    Ident          go to state 87
+    IdFun          go to state 88
+
+
+State 170
+
+   47 Sentencia_if: IF LEFT_PAR Expresion $@11 . Sentencia_if2
+
+    RIGHT_PAR  shift, and go to state 176
+
+    Sentencia_if2  go to state 177
+
+
+State 171
+
+   53 Sentencia_while: WHILE LEFT_PAR Expresion $@13 . Sentencia_while2
+
+    RIGHT_PAR  shift, and go to state 178
+
+    Sentencia_while2  go to state 179
+
+
+State 172
+
+   45 Sentencia_asignacion: Ident $@10 ASSIGN Expresion SEMICOLON .
+
+    $default  reduce using rule 45 (Sentencia_asignacion)
+
+
+State 173
+
+   61 Sentencias_case: CASE Expresion COLON Bloque . Sentencias_case
+
+    CASE     shift, and go to state 104
+    DEFAULT  shift, and go to state 105
+
+    $default  reduce using rule 63 (Sentencias_case)
+
+    Sentencias_case  go to state 180
+
+
+State 174
+
+   62 Sentencias_case: DEFAULT COLON Bloque Sentencias_case .
+
+    $default  reduce using rule 62 (Sentencias_case)
+
+
+State 175
+
+   70 Expresion: Expresion . LOGIC_OR Expresion
+   71          | Expresion . LOGIC_AND Expresion
+   72          | Expresion . XOR Expresion
+   73          | Expresion . BIT_OR Expresion
+   74          | Expresion . BIT_AND Expresion
+   76          | Expresion . ADD_SUB Expresion
+   77          | Expresion . MULT Expresion
+   78          | Expresion . EQ_NEQ Expresion
+   79          | Expresion . VALUE_COMP Expresion
+   80          | Expresion . LIST_BIN Expresion
+   82          | Expresion . DECR Expresion
+   83          | Expresion . INCR Expresion TERNARY Expresion
+   83          | Expresion INCR Expresion TERNARY Expresion .
+
+    INCR  shift, and go to state 114
+    DECR  shift, and go to state 115
+
+    $default  reduce using rule 83 (Expresion)
+
+
+State 176
+
+   48 Sentencia_if2: RIGHT_PAR . Sentencia
+   49              | RIGHT_PAR . Sentencia Sentencia_else
+
+    OPEN_BLOCK  shift, and go to state 17
+    SWITCH      shift, and go to state 44
+    BREAK       shift, and go to state 45
+    RETURN      shift, and go to state 46
+    READ        shift, and go to state 47
+    WRITE       shift, and go to state 48
+    ID          shift, and go to state 49
+    LIST_HEAD   shift, and go to state 50
+
+    WHILE     reduce using rule 42 ($@9)
+    $default  reduce using rule 40 ($@8)
+
+    Bloque                go to state 51
+    Sentencia             go to state 181
+    $@8                   go to state 53
+    $@9                   go to state 54
+    Sentencia_asignacion  go to state 55
+    Sentencia_entrada     go to state 56
+    Sentencia_salida      go to state 57
+    Sentencia_return      go to state 58
+    Sentencia_switch      go to state 59
+    Sentencia_break       go to state 60
+    Ident                 go to state 61
+
+
+State 177
+
+   47 Sentencia_if: IF LEFT_PAR Expresion $@11 Sentencia_if2 .
+
+    $default  reduce using rule 47 (Sentencia_if)
+
+
+State 178
+
+   54 Sentencia_while2: RIGHT_PAR . Sentencia
+
+    OPEN_BLOCK  shift, and go to state 17
+    SWITCH      shift, and go to state 44
+    BREAK       shift, and go to state 45
+    RETURN      shift, and go to state 46
+    READ        shift, and go to state 47
+    WRITE       shift, and go to state 48
+    ID          shift, and go to state 49
+    LIST_HEAD   shift, and go to state 50
+
+    WHILE     reduce using rule 42 ($@9)
+    $default  reduce using rule 40 ($@8)
+
+    Bloque                go to state 51
+    Sentencia             go to state 182
+    $@8                   go to state 53
+    $@9                   go to state 54
+    Sentencia_asignacion  go to state 55
+    Sentencia_entrada     go to state 56
+    Sentencia_salida      go to state 57
+    Sentencia_return      go to state 58
+    Sentencia_switch      go to state 59
+    Sentencia_break       go to state 60
+    Ident                 go to state 61
+
+
+State 179
+
+   53 Sentencia_while: WHILE LEFT_PAR Expresion $@13 Sentencia_while2 .
+
+    $default  reduce using rule 53 (Sentencia_while)
+
+
+State 180
+
+   61 Sentencias_case: CASE Expresion COLON Bloque Sentencias_case .
+
+    $default  reduce using rule 61 (Sentencias_case)
+
+
+State 181
+
+   48 Sentencia_if2: RIGHT_PAR Sentencia .
+   49              | RIGHT_PAR Sentencia . Sentencia_else
+
+    ELSE  shift, and go to state 183
+
+    ELSE      [reduce using rule 48 (Sentencia_if2)]
+    $default  reduce using rule 48 (Sentencia_if2)
+
+    Sentencia_else  go to state 184
+
+
+State 182
+
+   54 Sentencia_while2: RIGHT_PAR Sentencia .
+
+    $default  reduce using rule 54 (Sentencia_while2)
+
+
+State 183
+
+   51 Sentencia_else: ELSE . $@12 Sentencia
+
+    $default  reduce using rule 50 ($@12)
+
+    $@12  go to state 185
+
+
+State 184
+
+   49 Sentencia_if2: RIGHT_PAR Sentencia Sentencia_else .
+
+    $default  reduce using rule 49 (Sentencia_if2)
+
+
+State 185
+
+   51 Sentencia_else: ELSE $@12 . Sentencia
+
+    OPEN_BLOCK  shift, and go to state 17
+    SWITCH      shift, and go to state 44
+    BREAK       shift, and go to state 45
+    RETURN      shift, and go to state 46
+    READ        shift, and go to state 47
+    WRITE       shift, and go to state 48
+    ID          shift, and go to state 49
+    LIST_HEAD   shift, and go to state 50
+
+    WHILE     reduce using rule 42 ($@9)
+    $default  reduce using rule 40 ($@8)
+
+    Bloque                go to state 51
+    Sentencia             go to state 186
+    $@8                   go to state 53
+    $@9                   go to state 54
+    Sentencia_asignacion  go to state 55
+    Sentencia_entrada     go to state 56
+    Sentencia_salida      go to state 57
+    Sentencia_return      go to state 58
+    Sentencia_switch      go to state 59
+    Sentencia_break       go to state 60
+    Ident                 go to state 61
+
+
+State 186
+
+   51 Sentencia_else: ELSE $@12 Sentencia .
+
+    $default  reduce using rule 51 (Sentencia_else)

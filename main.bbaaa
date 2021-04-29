@@ -1,0 +1,30 @@
+main ()
+{
+	
+	int a=0, b=1, c=2;
+	float d=5.5;
+    list of char mensaje;
+	char x = 'a';
+
+	switch (a){
+        case (a<0){
+		    write "mal";
+        }
+        case (a==0){
+            write "bien";
+        }
+		case (a>0){
+            write "mejor";
+        }
+	}
+
+	if(true){
+		read b;
+	}
+	else a=b;
+
+	if(!b){
+		if(a==c)
+			c=2.3;
+	}
+}

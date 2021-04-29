@@ -1,0 +1,31 @@
+main() {
+    var
+        int N;
+        int Dato;
+        int contador;
+        int prev;
+        int temp;
+    endvar
+
+    write "Introduzca un número";
+    read N;
+
+    contador = 0;
+    prev = 0;
+
+    while (N > contador) {
+        if (contador == 0) {
+            Dato = prev;
+        } else if (contador == 1) {
+            Dato = 1;
+        } else {
+            temp = Dato;
+            Dato = Dato + prev;
+            prev = temp;
+        }
+        write "Elemento nro ", contador, ": ", Dato;
+        contador = contador + 1;
+    }
+    write "Dato * 10 = ",Dato * 10;
+    write "Dato / ", (N - 1)," = ", Dato / (N - 1);
+}

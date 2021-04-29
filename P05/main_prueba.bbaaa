@@ -1,0 +1,9 @@
+main() {
+    var 
+        bool a;
+    endvar
+    while (a && false) {
+        a = true;
+    } 
+    a = !false && (true || false);
+}

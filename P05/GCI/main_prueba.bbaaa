@@ -1,0 +1,6 @@
+main() {
+    var 
+        bool a;
+    endvar
+    a = !false && (true || false);
+}

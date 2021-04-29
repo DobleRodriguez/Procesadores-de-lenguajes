@@ -1,0 +1,28 @@
+main() {
+    var
+        int N;
+        list of int Dato1;
+        list of int Dato2;
+        list of int Dato3;
+        int contador;
+    endvar
+
+    write "Introduzca un número";
+    read N;
+
+    contador = 0;
+    while (N > contador) {
+        if (contador < 2) {
+            Dato1 = Dato1 ++ contador @@ contador;
+        } else {
+            Dato1 = Dato1 ++ ((Dato1@(contador-1)) + (Dato1@(contador-2))) @@ contador;
+        }
+        contador = contador + 1;
+    }
+    write Dato1;
+    Dato2 = Dato1 * 2;
+    write Dato2;
+    Dato3 = Dato1 ** Dato2;
+    write Dato3;
+
+}

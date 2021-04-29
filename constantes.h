@@ -28,5 +28,8 @@
 #define CHAR_VAR 524
 #define LISTING 525
 #define CHAIN 526
+#define IDENTIFIER 527
+#define VAR 528
+#define ENDVAR 529
 
 #endif

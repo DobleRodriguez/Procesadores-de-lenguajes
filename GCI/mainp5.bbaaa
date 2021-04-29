@@ -1,0 +1,41 @@
+main() {
+    var
+        int N;
+        list of int Dato;
+    endvar
+
+    list of int fibo(int N) {
+        var
+            list of int Dato1;
+            int contador;
+        endvar
+
+        int fiboimprime(){
+            var
+                list of int Dato2, Dato3;
+            endvar
+
+            write Dato1;
+            Dato2 = Dato * 2;
+            write Dato2;
+            Dato3 = Dato1 ** Dato2;
+            write Dato3;
+        }
+
+        contador = 0;
+        while (N > contador) {
+            if (contador < 2) {
+                Dato1 = Dato1 ++ contador @@ contador;
+            }
+            else {
+                Dato1 = Dato1 ++ ( (Dato1@contador-1) + (Dato1@contador-2) ) @@ contador;
+            }
+            contador = contador+1;
+        }
+
+        return Dato1;
+    }
+    write "Introduzca un número";
+    read N;
+    Dato = fibo(N);
+}

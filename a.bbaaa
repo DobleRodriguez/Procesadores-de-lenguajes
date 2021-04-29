@@ -1,0 +1,7 @@
+main() 
+{
+    var
+        bool vl;
+    endvar
+    vl = true && false;
+}

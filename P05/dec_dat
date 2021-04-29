@@ -1,0 +1,105 @@
+#ifndef DEC_DAT
+#define DEC_DAT
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+struct listOfInt{
+    int data;
+    struct listOfInt *next;
+};
+
+struct listOfChar{
+    char data;
+    struct listOfChar *next;
+};
+
+struct listOfBool{
+    bool data;
+    struct listOfBool *next;
+};
+
+struct listOfFloat{
+    float data;
+    struct listOfFloat *next;
+};
+
+void printListInt(struct listOfInt * lista) {
+   struct listOfInt *ptr = lista;
+   printf("[ ");
+	int contador = 0;
+   //empezamos por el principio
+   while(ptr != NULL && contador <300) {
+      printf("%d, ",ptr->data);
+      ptr = ptr->next;
+      contador++;
+   }
+   printf(" ]");
+}
+
+struct listOfInt * insertIntElement(struct listOfInt * lista, int data , int indice){
+   int primer = 0;
+   struct listOfInt * nuevo = (struct listOfInt*) malloc(sizeof(struct listOfInt));
+   nuevo->data = data;
+   if (lista == NULL) {
+      lista =  (struct listOfInt*) malloc(sizeof(struct listOfInt));
+      primer = 1;
+   }
+   struct listOfInt * actual = lista;
+   int pos = 0;
+   while (pos < indice-1 && actual->next != NULL){
+      actual = actual->next;
+      ++pos;
+   }
+   if (primer) {
+      actual = nuevo;
+   } else {
+      nuevo->next = actual->next;
+      actual->next = nuevo;
+   }
+   return lista;
+}
+
+struct listOfInt * concatenarListasInt(struct listOfInt * unaLista , struct listOfInt * otralista){
+    struct listOfInt * actual;
+    if (unaLista == NULL){ 
+        unaLista = otralista;
+    }
+    else{
+         if (otralista != NULL){  
+            actual = unaLista;           
+            while (actual->next != NULL)
+               actual = actual->next;
+            actual->next = otralista;        
+         }
+    }
+    return unaLista;  
+}
+
+int GCI_BusquedaPorIndice(struct listOfInt * lista, int indice) {
+    struct listOfInt * actual = lista;
+    for (int i=0; i<indice && actual != NULL; i++) {
+        actual = actual->next;
+    }
+    if (actual != NULL) {
+      return actual->data;
+    } 
+}
+
+struct listOfInt * GCI_Multiplica(struct listOfInt * lista, int valor) {
+   struct listOfInt * actual = lista;
+   struct listOfInt * nuevo = (struct listOfInt*) malloc(sizeof(struct listOfInt));
+   struct listOfInt * indice = nuevo;
+   while (actual->next != NULL) {
+      indice->data = actual->data * 2;
+      actual = actual->next;
+      indice->next = (struct listOfInt*) malloc(sizeof(struct listOfInt));
+      indice = indice->next;
+   }
+   indice->data = actual->data * 2;
+   return nuevo;
+}
+
+#endif
